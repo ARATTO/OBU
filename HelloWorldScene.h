@@ -11,19 +11,27 @@ private:
 	//cocos2d::CCSpriteBatchNode * _batchNode;
 	//cocos2d::CCSprite * _ship;
 	
-	cocos2d::Sprite *puntoVerde;
-	cocos2d::Sprite *oscuridad;
+	cocos2d::Sprite *obu;
+	cocos2d::Sprite *oscuridad1;
 	cocos2d::Sprite *explosion;
 	cocos2d::Sprite *fondo;
+	cocos2d::Sprite *objetivo1;
+	cocos2d::Sprite *objetivo2;
+	cocos2d::Sprite *objetivo3;
 	cocos2d::Label *label;
+	std::vector<cocos2d::Sprite*> dark;
+	
 	float _shipPointsPerSecY;
 	int puntaje=0;
 	float AN;
 	float AL;
 	float degradado=250;
+	int ranx;
+	int rany;
+	int Eobjetivo1 = 1;
+	int Eobjetivo2 = 1;
+	int Eobjetivo3 = 1;
 
-
-	void update(float x, float y);
 	void crearViento();
 	void crearFuego();
 	void crearAgua();
