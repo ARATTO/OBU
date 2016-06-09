@@ -15,11 +15,10 @@ private:
 	cocos2d::Sprite *oscuridad1;
 	cocos2d::Sprite *explosion;
 	cocos2d::Sprite *fondo;
-	cocos2d::Sprite *objetivo1;
-	cocos2d::Sprite *objetivo2;
-	cocos2d::Sprite *objetivo3;
+	cocos2d::Sprite *luz;
 	cocos2d::Label *label;
 	std::vector<cocos2d::Sprite*> dark;
+	std::vector<cocos2d::Sprite*> light;
 	
 	float _shipPointsPerSecY;
 	int puntaje=0;
@@ -28,6 +27,8 @@ private:
 	float degradado=250;
 	int ranx;
 	int rany;
+	int ranOXmin=100;
+	int ranOXmax;
 	int Eobjetivo1 = 1;
 	int Eobjetivo2 = 1;
 	int Eobjetivo3 = 1;

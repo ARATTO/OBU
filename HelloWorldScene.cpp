@@ -56,10 +56,10 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
     
-    label = Label::createWithTTF("puntaje: 0", "fonts/Marker Felt.ttf", 24);
+    label = Label::createWithTTF("puntaje: 0", "fonts/Marker Felt.ttf", 18);
     
     // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width/2,
+    label->setPosition(Vec2(38,
                             origin.y + visibleSize.height - label->getContentSize().height));
 
     // add the label as a child to this layer
@@ -70,11 +70,14 @@ bool HelloWorld::init()
     AN = TM.width;
     AL = TM.height;
     
+    CCLOG("alto: %f  ancho: %f",AL,AN);
+    
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Elementos.plist");
     
     fondo = Sprite::createWithSpriteFrameName("cielo.png");
-    fondo->setPosition(Vec2(150, 150));
-    fondo->setScale(AL*1.2/fondo->getContentSize().height);
+    fondo->setPosition(Vec2(293, 150));
+    fondo->setScaleY(AL*1.0/fondo->getContentSize().height);
+    fondo->setScaleX(AN*0.80/fondo->getContentSize().width);
 	addChild(fondo);	
 	
 
@@ -83,7 +86,7 @@ bool HelloWorld::init()
 		
     obu = Sprite::createWithSpriteFrameName("obu.png");
     obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(50, 100));
+	obu->setPosition(Vec2(125, 100));
     obu->setScale(AL*0.1/obu->getContentSize().height);
     
     addChild(obu);
@@ -98,72 +101,56 @@ bool HelloWorld::init()
    	explosion->setVisible(false);
    	fondo:addChild(explosion);
 	
-	dark.reserve(10);
+	dark.reserve(8);
+	dark.reserve(3);
 	
-	for (int i=0;i < dark.capacity(); i++){
+	for (int i=2;i < dark.capacity()+5; i++){
 		
+		if(i%2==0){
+			ranOXmin+=(AN-130)/10  - 5;
+			ranOXmax = ranOXmin+20;
+			
+			CCLOG("minimo X: %i",ranOXmin);
 
-		ranx = cocos2d::RandomHelper::random_int(100, 350);
-		rany = cocos2d::RandomHelper::random_int(10, 200);	
+		}else{
+			ranOXmin+=(AN-130)/10;
+			ranOXmax= ranOXmin+15;
 
+			CCLOG("minimo X: %i",ranOXmin);
+		}
+
+		ranx = cocos2d::RandomHelper::random_int(ranOXmin, ranOXmax);
+		rany = cocos2d::RandomHelper::random_int(10, 290);	
 		
-
-   	oscuridad1 = Sprite::createWithSpriteFrameName("oscuridad.png");
-    oscuridad1->setAnchorPoint(Vec2(0.1, 0.1));
-	oscuridad1->setPosition(Vec2(ranx, rany));
-    oscuridad1->setScale(AL*0.1/oscuridad1->getContentSize().height);
-    oscuridad1->setTag(i);
+		
+	if(i==4 || i== 7 || i==10){
+		
+		luz = Sprite::createWithSpriteFrameName("luz.png");
+    	luz->setAnchorPoint(Vec2(0.1, 0.1));
+		luz->setPosition(Vec2(ranx, rany));
+    	luz->setScale(AL*0.1/oscuridad1->getContentSize().height);
+    	luz->setTag(i);
     
-    dark.push_back(oscuridad1);
+    	light.push_back(luz);
     
-	addChild(oscuridad1);
+		addChild(luz);	
+		
+	}else
+	{
+		oscuridad1 = Sprite::createWithSpriteFrameName("oscuridad.png");
+    	oscuridad1->setAnchorPoint(Vec2(0.1, 0.1));
+		oscuridad1->setPosition(Vec2(ranx, rany));
+    	oscuridad1->setScale(AL*0.1/oscuridad1->getContentSize().height);
+    	oscuridad1->setTag(i);
+    
+    	dark.push_back(oscuridad1);
+    
+		addChild(oscuridad1);	
+	}
+   	
 		
 	}
 	
-
-	
-
-		ranx = cocos2d::RandomHelper::random_int(120, 200);
-		rany = cocos2d::RandomHelper::random_int(120, 200);	
-
-		
-   	   	
-   	objetivo1 = Sprite::createWithSpriteFrameName("luz.png");
-    objetivo1->setAnchorPoint(Vec2(0.1, 0.1));
-	objetivo1->setPosition(Vec2(ranx, rany));
-    objetivo1->setScale(AL*0.1/objetivo1->getContentSize().height);
-
-    
-	addChild(objetivo1);
-	
-
-		ranx = cocos2d::RandomHelper::random_int(220, 350);
-		rany = cocos2d::RandomHelper::random_int(50, 200);	
-
-	
-	
-	objetivo2 = Sprite::createWithSpriteFrameName("luz.png");
-    objetivo2->setAnchorPoint(Vec2(0.1, 0.1));
-	objetivo2->setPosition(Vec2(ranx, rany));
-    objetivo2->setScale(AL*0.1/objetivo2->getContentSize().height);
-
-    
-	addChild(objetivo2);
-	
-	
-
-		ranx = cocos2d::RandomHelper::random_int(300, 350);
-		rany = cocos2d::RandomHelper::random_int(10, 200);	
-
-	
-	
-	objetivo3 = Sprite::createWithSpriteFrameName("luz.png");
-    objetivo3->setAnchorPoint(Vec2(0.1, 0.1));
-	objetivo3->setPosition(Vec2(ranx, rany));
-    objetivo3->setScale(AL*0.1/objetivo3->getContentSize().height);
-
-    
-	addChild(objetivo3);
 	
 
 	/*FUNCION DE LLAMADO Y GENERADOR DE EVENTO DEL ACELEROMETRO*/
@@ -172,7 +159,7 @@ bool HelloWorld::init()
 	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 	
-	
+	CCLOG("SE TERMINO EL INIT");
 	
     return true;
 }
@@ -275,16 +262,6 @@ void HelloWorld::crearPlanta(){
 
 void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 {
- 
-    
-      #define KFILTERINGFACTOR 0.1
-    #define KRESTACCELX -0.6
-    #define KSHIPMAXPOINTSPERSEC (winSize.height*0.5)
-    #define KMAXDIFFX 0.2
-
-    
-    double rollingX;
-   
     
     float posX= acc->x;
 	float posY =acc->y;	
@@ -302,9 +279,9 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
     Y = Y + (posY* h *0.03);
     
        CCLOG("aca es X: %f", X);
-   	CCLOG("aca es Y: %f", Y);
+   	   CCLOG("aca es Y: %f", Y);
     
-    if(   (X<410 && Y<280)  && (X>10 && Y>15)  )  {
+    if(   (X<480 && Y<280)  && (X>111 && Y>15)  )  {
     	obu->setPosition(X, Y);
     	degradado = degradado -10;
     	
@@ -316,11 +293,11 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
     else{
     	
     	
-    	if(X>410){
+    	if(X>460){
     		auto choqueXD = MoveTo::create(1,Point(X-25,Y));
     		obu->runAction(choqueXD);
     	}else
-     	if(X<10){
+     	if(X<115){
     		auto choqueXI = MoveTo::create(1,Point(X+25,Y));	
     		obu->runAction(choqueXI);
     	}else
@@ -336,94 +313,78 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
     	
     }
     
-    
+		float ancho = obu->getScaleX(); 
+		float alto = obu->getScaleY();
+		
+    	Rect bbObu = obu->getBoundingBox();	
 
-    Rect bbObu = obu->getBoundingBox();
-	Rect bbObjetivo1 = objetivo1->getBoundingBox();
-	Rect bbObjetivo2 = objetivo2->getBoundingBox();
-	Rect bbObjetivo3 = objetivo3->getBoundingBox();
-	
 	
 	for(auto sp : dark){
+		
 		Rect bbOscuridad = sp->getBoundingBox();
 		
-		if(bbObu.intersectsRect(bbOscuridad)){
+		float X = sp->getPosition().x;
+    	float Y = sp->getPosition().y;
+    	
+    	float r = sp->getScaleX();
+    	
+    	CCLOG("el tamano de X es: %f",r);
+
+		
+		if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.2) ){
 		degradado =250;
 		explosion->setOpacity(degradado);
+
+			float posx = obu->getPosition().x;
+			float posy = obu->getPosition().y;
 		
-	
-		float posx = obu->getPosition().x;
-		float posy = obu->getPosition().y;
+			obu->setVisible(false);
+			explosion->setPosition(Vec2(posx, posy));
+			explosion->setVisible(true);
 		
-		obu->setVisible(false);
-		explosion->setPosition(Vec2(posx, posy));
-		explosion->setVisible(true);
+			obu->setPosition(Vec2(120, 100));
+			obu->setVisible(true);
+				
 		
-		obu->setPosition(Vec2(50, 100));
-		obu->setVisible(true);
-	}
-    	log("sprite tag = %d", sp->getTag());
-}
-	 
-	
-		if(Eobjetivo1!=0){
-			if(bbObu.intersectsRect(bbObjetivo1)){
-	
-			objetivo1->setVisible(false);
-			//removeChildByTag(1);
-		
-			puntaje++;
-	
-			std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
-			
-			label->setString(punt);
-		
-			
-			
-			Eobjetivo1=0;
-				}
 		}
-		
 	
-	
-	if(Eobjetivo2!=0){
-		if(bbObu.intersectsRect(bbObjetivo2) ){
 
-
-		objetivo2->setVisible(false);
-		//removeChildByTag(2);
-		puntaje++;
-
-		std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
-		
-		label->setString(punt);
-		
-		Eobjetivo2=0;
-		}
 	}
 	
 	
-
+		for(auto sp : light){
+			int i= 0;
+			
+			Rect bbLuz= sp->getBoundingBox();
+		
+			float X = sp->getPosition().x;
+	    	float Y = sp->getPosition().y;
+	    	
+	    	float r = sp->getScaleX();
+	    	
+	    	CCLOG("el tamano de X es: %f",r);
 	
-	if(Eobjetivo3!=0){
-		if(bbObu.intersectsRect(bbObjetivo3)  ){
-
-		objetivo3->setVisible(false);
-		//removeChildByTag(3);
+			
+			if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.2) ){
+			
+				sp->setVisible(false);
+				
+				puntaje++;
 		
-		puntaje++;
-
-		std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
-		
-		label->setString(punt);
-		Eobjetivo3=0;
+				std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
+				
+				label->setString(punt);
+				
+				light.erase(light.begin()+i);	
+				
 			}
-	}
+			
+			i++;
+		}
+			
+	
+	 
 
-
-
-
-  	
 }
 
 
