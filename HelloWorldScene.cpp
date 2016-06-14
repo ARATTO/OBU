@@ -50,6 +50,15 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
+
+
+
+   	
+   	
+   	//felicidades = Label::createWithTTF("", "fonts/Marker Felt.ttf", 24);
+   	//felicidades->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height - label->getContentSize().height));
+   	
+   	
     /////////////////////////////
     // 3. add your codes below...
 
@@ -65,6 +74,8 @@ bool HelloWorld::init()
     // add the label as a child to this layer
     this->addChild(label, 1);
     
+    
+     
     Size TM = Director::getInstance()->getWinSize();
 
     AN = TM.width;
@@ -101,7 +112,7 @@ bool HelloWorld::init()
    	explosion->setVisible(false);
    	fondo:addChild(explosion);
 	
-	dark.reserve(8);
+	dark.reserve(7);
 	dark.reserve(3);
 	
 	for (int i=2;i < dark.capacity()+5; i++){
@@ -159,11 +170,19 @@ bool HelloWorld::init()
 	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 	
+	
+	
+	
+	
 	CCLOG("SE TERMINO EL INIT");
 	
     return true;
 }
 
+
+void HelloWorld::update(float dt){
+	
+}
 
 
 
@@ -280,16 +299,145 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
     
        CCLOG("aca es X: %f", X);
    	   CCLOG("aca es Y: %f", Y);
-    
-    if(   (X<480 && Y<280)  && (X>111 && Y>15)  )  {
-    	obu->setPosition(X, Y);
-    	degradado = degradado -10;
+   	   
+   	   
+   	if(puntaje!=3 && vida>0)   {
+   		
+   		  if(   (X<AN-25 && Y<AL-40)  && (X>115 && Y>15)  )  {
+    			obu->setPosition(X, Y);
+    			degradado = degradado -10;
     	
-    	if(degradado<=0){
-    		degradado =0;
-    	}
-		explosion->setOpacity(degradado);
-    }
+    			if(degradado<=0){
+    					degradado =0;
+    			}
+				explosion->setOpacity(degradado);
+    		}
+    		
+    		
+    		
+    		float ancho = obu->getScaleX(); 
+			float alto = obu->getScaleY();
+		
+    		Rect bbObu = obu->getBoundingBox();	
+
+	
+			for(auto sp : dark){	
+		
+				Rect bbOscuridad = sp->getBoundingBox();
+				
+				float X = sp->getPosition().x;
+		    	float Y = sp->getPosition().y;
+		    	
+		    	float r = sp->getScaleX();
+		    	
+		    	CCLOG("el tamano de X es: %f",r);
+		
+				
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.3) ){
+					degradado =250;
+					explosion->setOpacity(degradado);
+		
+					float posx = obu->getPosition().x;
+					float posy = obu->getPosition().y;
+				
+					obu->setVisible(false);
+					explosion->setPosition(Vec2(posx, posy));
+					explosion->setVisible(true);
+				
+					obu->setPosition(Vec2(120, 100));
+					obu->setVisible(true);
+						
+					vida--;
+				}
+	
+
+			}
+	
+	
+			for(auto sp : light){
+
+				Rect bbLuz= sp->getBoundingBox();
+			
+				float X = sp->getPosition().x;
+		    	float Y = sp->getPosition().y;
+		    	
+		    	float r = sp->getScaleX();
+		    	
+		    	CCLOG("el tamano de X es: %f",r);
+		
+				
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.3) ){
+				
+				
+					if(sp->isVisible()){
+						
+						sp->setVisible(false);
+					
+						puntaje++;
+			
+						std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
+					
+						label->setString(punt);
+					
+					
+					}
+	
+				
+				}
+	
+			}	
+		
+    	
+   		}else if(vida==0){
+ 
+   		
+	   	}else if(puntaje==3){
+	   			
+	   			obu->setPosition(X, AL/2-30);
+    			degradado = degradado -10;
+    	
+    			if(degradado<=0){
+    					degradado =0;
+    				}
+				explosion->setOpacity(degradado);
+	   		
+	   		
+	   		
+	   		for(auto sp : dark) {
+	   			this->removeChild(sp,true);
+	   		}
+	   		
+	   		dark.erase(dark.begin(),dark.end());	
+	   		
+	   		for(auto sp: light){
+	   			this->removeChild(sp,true);
+	   		}
+	   		
+	   		light.erase(light.begin(),light.end());
+	   		
+	   		gano = Sprite::createWithSpriteFrameName("felicitaciones.png");
+	    	gano->setAnchorPoint(Vec2(0.1, 0.1));
+			gano->setPosition(Vec2(AN/2 - 50, AL/2 -50));
+	    	gano->setScale(AL*0.5/gano->getContentSize().height);
+	    
+	    	addChild(gano);
+	   	}
+   			 
+
+}
+
+
+void HelloWorld::menuCloseCallback(Ref* pSender)
+{
+    Director::getInstance()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
+}
+
+
+    /*
     else{
     	
     	
@@ -311,94 +459,8 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
     	}
   	
     	
-    }
+    }*/
     
-		float ancho = obu->getScaleX(); 
-		float alto = obu->getScaleY();
-		
-    	Rect bbObu = obu->getBoundingBox();	
-
-	
-	for(auto sp : dark){
-		
-		Rect bbOscuridad = sp->getBoundingBox();
-		
-		float X = sp->getPosition().x;
-    	float Y = sp->getPosition().y;
-    	
-    	float r = sp->getScaleX();
-    	
-    	CCLOG("el tamano de X es: %f",r);
-
-		
-		if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.2) ){
-		degradado =250;
-		explosion->setOpacity(degradado);
-
-			float posx = obu->getPosition().x;
-			float posy = obu->getPosition().y;
-		
-			obu->setVisible(false);
-			explosion->setPosition(Vec2(posx, posy));
-			explosion->setVisible(true);
-		
-			obu->setPosition(Vec2(120, 100));
-			obu->setVisible(true);
-				
-		
-		}
-	
-
-	}
-	
-	
-		for(auto sp : light){
-			int i= 0;
-			
-			Rect bbLuz= sp->getBoundingBox();
-		
-			float X = sp->getPosition().x;
-	    	float Y = sp->getPosition().y;
-	    	
-	    	float r = sp->getScaleX();
-	    	
-	    	CCLOG("el tamano de X es: %f",r);
-	
-			
-			if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.2) ){
-			
-				sp->setVisible(false);
-				
-				puntaje++;
-		
-				std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
-				
-				label->setString(punt);
-				
-				light.erase(light.begin()+i);	
-				
-			}
-			
-			i++;
-		}
-			
-	
-	 
-
-}
-
-
-void HelloWorld::menuCloseCallback(Ref* pSender)
-{
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-}
-
-
-
 		
 		/*
 		if(puntaje==20){

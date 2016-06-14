@@ -8,15 +8,17 @@
 class HelloWorld : public cocos2d::Layer
 {
 private:
-	//cocos2d::CCSpriteBatchNode * _batchNode;
-	//cocos2d::CCSprite * _ship;
+
 	
 	cocos2d::Sprite *obu;
 	cocos2d::Sprite *oscuridad1;
 	cocos2d::Sprite *explosion;
 	cocos2d::Sprite *fondo;
 	cocos2d::Sprite *luz;
+	cocos2d::Sprite *gano;
 	cocos2d::Label *label;
+	cocos2d::Label *HPV;
+	cocos2d::Label *felicidades;
 	std::vector<cocos2d::Sprite*> dark;
 	std::vector<cocos2d::Sprite*> light;
 	
@@ -27,11 +29,9 @@ private:
 	float degradado=250;
 	int ranx;
 	int rany;
-	int ranOXmin=100;
+	int ranOXmin=110;
 	int ranOXmax;
-	int Eobjetivo1 = 1;
-	int Eobjetivo2 = 1;
-	int Eobjetivo3 = 1;
+	int vida =3;
 
 	void crearViento();
 	void crearFuego();
@@ -54,6 +54,8 @@ public:
     CREATE_FUNC(HelloWorld);
     
     void  onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event);
+    void  update(float dt);
 };
 
 #endif // __HELLOWORLD_SCENE_H__
+
