@@ -1,5 +1,5 @@
 #include "HelloWorldScene.h"
-
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -51,9 +51,11 @@ bool HelloWorld::init()
     this->addChild(menu, 1);
 
 
+	cerrar = Sprite::create("CloseSelected.png"); 
+	cerrar->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
+                                origin.y + closeItem->getContentSize().height/2));
 
-
-   	
+   	addChild(cerrar);
    	
    	//felicidades = Label::createWithTTF("", "fonts/Marker Felt.ttf", 24);
    	//felicidades->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height - label->getContentSize().height));
@@ -95,14 +97,8 @@ bool HelloWorld::init()
     
 	
 		
-    obu = Sprite::createWithSpriteFrameName("obu.png");
-    obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(125, 100));
-    obu->setScale(AL*0.1/obu->getContentSize().height);
-    
-    addChild(obu);
-   	
-   	
+   
+   		
   
 	
 	explosion = Sprite::createWithSpriteFrameName("explosion.png");
@@ -131,7 +127,7 @@ bool HelloWorld::init()
 		}
 
 		ranx = cocos2d::RandomHelper::random_int(ranOXmin, ranOXmax);
-		rany = cocos2d::RandomHelper::random_int(10, 290);	
+		rany = cocos2d::RandomHelper::random_int(25, 280);	
 		
 		
 	if(i==4 || i== 7 || i==10){
@@ -162,6 +158,41 @@ bool HelloWorld::init()
 		
 	}
 	
+	 obu = Sprite::createWithSpriteFrameName("obu.png");
+    obu->setAnchorPoint(Vec2(0.1, 0.1));
+	obu->setPosition(Vec2(125, 100));
+    obu->setScale(AL*0.1/obu->getContentSize().height);
+    
+    addChild(obu);
+   	
+   	 obuPausa = Sprite::createWithSpriteFrameName("obu.png");
+     obuPausa->setAnchorPoint(Vec2(0.1, 0.1));
+	 obuPausa->setPosition(Vec2(200, 100));
+     obuPausa->setScale(AL*0.1/obu->getContentSize().height);
+     obuPausa->setVisible(false);
+    
+	 addChild(obuPausa);
+	 
+	 siguiente = Sprite::createWithSpriteFrameName("siguiente.png");
+     siguiente->setAnchorPoint(Vec2(0.1, 0.1));
+	 siguiente->setPosition(Vec2(125, 100));
+     siguiente->setScale(AL*0.2/obu->getContentSize().height);
+     siguiente->setVisible(false);
+    
+	 addChild(siguiente);
+	 
+	 
+	 SPausa = Sprite::createWithSpriteFrameName("pausa.png");
+	 SPausa->setAnchorPoint(Vec2(0.1, 0.1));
+	 SPausa->setPosition(Vec2(AN/2 - 40, AL/2+50));
+	 SPausa->setScale(AL*0.3/SPausa->getContentSize().height);
+	 SPausa->setVisible(false);
+	    	
+	 addChild(SPausa);
+	 
+	 CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/explo.mp3");
+	
+
 	
 
 	/*FUNCION DE LLAMADO Y GENERADOR DE EVENTO DEL ACELEROMETRO*/
@@ -290,18 +321,26 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
     float w = screenSize.width;
     float h = screenSize.height;
     
-    float X = obu->getPosition().x;
-    float Y = obu->getPosition().y;
+  
+    
+      
+   	   
+   	   
+   	if(puntaje!=3 && vida>0 && pausa==0)   {
+   		obu->setVisible(true);
+   		SPausa->setVisible(false); 
+   		siguiente->setVisible(false); 
+   		obuPausa->setVisible(false); 
+   		
+   		 float X = obu->getPosition().x;
+    	 float Y = obu->getPosition().y;
     
     
-    X = X + (posX* w *0.03);
-    Y = Y + (posY* h *0.03);
-    
-       CCLOG("aca es X: %f", X);
+    	X = X + (posX* w *0.03);
+    	Y = Y + (posY* h *0.03);
+    	
+    	 CCLOG("aca es X: %f", X);
    	   CCLOG("aca es Y: %f", Y);
-   	   
-   	   
-   	if(puntaje!=3 && vida>0)   {
    		
    		  if(   (X<AN-25 && Y<AL-40)  && (X>115 && Y>15)  )  {
     			obu->setPosition(X, Y);
@@ -322,7 +361,9 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 
 	
 			for(auto sp : dark){	
-		
+				
+				sp->setVisible(true);
+				
 				Rect bbOscuridad = sp->getBoundingBox();
 				
 				float X = sp->getPosition().x;
@@ -334,6 +375,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 		
 				
 				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.3) ){
+				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
 		
@@ -387,13 +429,31 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	
 			}	
 		
-    	
+	
+			Rect Rcerrar = cerrar->getBoundingBox();
+			
+			if(bbObu.intersectsRect(Rcerrar)){
+				pausa = 1;
+				obu->setPosition(X-10, Y);
+			}
+    		
    		}else if(vida==0){
  
    		
 	   	}else if(puntaje==3){
+	   		obu->setVisible(true);
+	   		SPausa->setVisible(false); 
+	   		siguiente->setVisible(false); 
+	   		obuPausa->setVisible(false); 
+	   		
+	   		
+	   		 float X1 = obu->getPosition().x;
+	   		 X1 = X1 + (posX* w *0.03);
 	   			
-	   			obu->setPosition(X, AL/2-30);
+	   			if(X1>50 && X1<300){
+	   				obu->setPosition(X1, AL/2-30);	
+	   			}
+	   			
     			degradado = degradado -10;
     	
     			if(degradado<=0){
@@ -420,7 +480,39 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 			gano->setPosition(Vec2(AN/2 - 50, AL/2 -50));
 	    	gano->setScale(AL*0.5/gano->getContentSize().height);
 	    
-	    	addChild(gano);
+	    	addChild(gano);	
+	   	}
+	   	else if(pausa==1){
+	   		
+	   		for (auto sp : dark){
+	   			sp->setVisible(false);
+	   		}
+	   		
+	   		obu->setVisible(false);
+	   		
+	   		float X1 = obuPausa->getPosition().x;
+	   		 X1 = X1 + (posX* w *0.03);
+	   			
+	   			if(X1>120 && X1<400){
+	   				obuPausa->setPosition(X1, AL/2-30);	
+	   			}
+	   		
+	   		obuPausa->setVisible(true); 
+	   		
+	   		siguiente->setPosition(350, AL/2-40);	
+	   		siguiente->setVisible(true); 
+	   		SPausa->setVisible(true);
+	   		
+	   		Rect OB = obuPausa->getBoundingBox();
+	   		Rect S =  siguiente->getBoundingBox();
+	   		
+	   		if(OB.intersectsRect(S)){
+	   			pausa=0;
+	   			 obuPausa->setPosition(Vec2(200, 100));
+	   			
+	   		}
+	   	
+	   		
 	   	}
    			 
 
@@ -436,6 +528,23 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 #endif
 }
 
+
+
+void HelloWorld::cerrarPantalla(){
+    Director::getInstance()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
+}
+
+
+void HelloWorld::pausar(){
+	
+    //Director::getInstance()->pause();
+	//Director::sharedDirector()->stopAnimation();
+
+}
 
     /*
     else{

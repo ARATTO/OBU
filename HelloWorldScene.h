@@ -16,11 +16,16 @@ private:
 	cocos2d::Sprite *fondo;
 	cocos2d::Sprite *luz;
 	cocos2d::Sprite *gano;
+	cocos2d::Sprite *obuPausa;
+	cocos2d::Sprite *SPausa;
+	cocos2d::Sprite *siguiente;
 	cocos2d::Label *label;
 	cocos2d::Label *HPV;
 	cocos2d::Label *felicidades;
 	std::vector<cocos2d::Sprite*> dark;
 	std::vector<cocos2d::Sprite*> light;
+	cocos2d::Sprite *cerrar;
+	
 	
 	float _shipPointsPerSecY;
 	int puntaje=0;
@@ -29,9 +34,10 @@ private:
 	float degradado=250;
 	int ranx;
 	int rany;
-	int ranOXmin=110;
+	int ranOXmin=120;
 	int ranOXmax;
 	int vida =3;
+	int pausa =0;
 
 	void crearViento();
 	void crearFuego();
@@ -49,6 +55,8 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
+    void cerrarPantalla();
+    void pausar();
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
