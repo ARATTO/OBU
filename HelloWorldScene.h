@@ -11,16 +11,23 @@ private:
 
 	
 	cocos2d::Sprite *obu;
+	cocos2d::Sprite *vida1;
+	cocos2d::Sprite *vida2;
+	cocos2d::Sprite *vida3;
 	cocos2d::Sprite *oscuridad1;
 	cocos2d::Sprite *explosion;
 	cocos2d::Sprite *fondo;
+	cocos2d::Sprite *BarraHorizontal;
+	cocos2d::Sprite *BarraVertical;
 	cocos2d::Sprite *luz;
 	cocos2d::Sprite *gano;
 	cocos2d::Sprite *obuPausa;
 	cocos2d::Sprite *SPausa;
 	cocos2d::Sprite *siguiente;
+	cocos2d::Sprite *Spausa;
+	cocos2d::Sprite *HPV;
 	cocos2d::Label *label;
-	cocos2d::Label *HPV;
+	cocos2d::Label *salud;
 	cocos2d::Label *felicidades;
 	std::vector<cocos2d::Sprite*> dark;
 	std::vector<cocos2d::Sprite*> light;
@@ -34,7 +41,7 @@ private:
 	float degradado=250;
 	int ranx;
 	int rany;
-	int ranOXmin=120;
+	int ranOXmin=130;
 	int ranOXmax;
 	int vida =3;
 	int pausa =0;
