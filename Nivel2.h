@@ -1,11 +1,11 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __NIVEL2_SCENE_H__
+#define __NIVEL2_SCENE_H__
 
 #include "cocos2d.h"
 
 
 
-class HelloWorld : public cocos2d::Layer
+class Nivel2 : public cocos2d::Layer
 {
 private:
 
@@ -14,7 +14,9 @@ private:
 	cocos2d::Sprite *vida1;
 	cocos2d::Sprite *vida2;
 	cocos2d::Sprite *vida3;
+	cocos2d::Sprite *cambioAgua;
 	cocos2d::Sprite *oscuridad1;
+	cocos2d::Sprite *fuego;
 	cocos2d::Sprite *explosion;
 	cocos2d::Sprite *fondo;
 	cocos2d::Sprite *BarraHorizontal;
@@ -31,6 +33,7 @@ private:
 	cocos2d::Label *felicidades;
 	std::vector<cocos2d::Sprite*> dark;
 	std::vector<cocos2d::Sprite*> light;
+	std::vector<cocos2d::Sprite*> fire;
 	cocos2d::Sprite *cerrar;
 	
 	
@@ -45,6 +48,7 @@ private:
 	int ranOXmax;
 	int vida =3;
 	int pausa =0;
+	int agua = 0;
 
 	void crearViento();
 	void crearFuego();
@@ -65,14 +69,13 @@ public:
     void cerrarPantalla();
     void pausar();
     void reiniciar();
-    void siguienteNivel();
     
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(Nivel2);
     
     void  onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event);
     void  update(float dt);
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __Nivel2_SCENE_H__
 

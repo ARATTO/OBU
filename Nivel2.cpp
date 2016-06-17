@@ -1,15 +1,16 @@
-#include "HelloWorldScene.h"
+#include "Nivel2.h"
 #include "SimpleAudioEngine.h"
 
-#include "Nivel2.h"
+
+
 USING_NS_CC;
 
-Scene* HelloWorld::createScene(){
+Scene* Nivel2::createScene(){
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     
     // 'layer' is an autorelease object
-    auto layer = HelloWorld::create();
+    auto layer = Nivel2::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -19,7 +20,7 @@ Scene* HelloWorld::createScene(){
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool Nivel2::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -39,7 +40,7 @@ bool HelloWorld::init()
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+                                           CC_CALLBACK_1(Nivel2::menuCloseCallback, this));
     
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
                                 origin.y + closeItem->getContentSize().height/2));
@@ -143,10 +144,11 @@ bool HelloWorld::init()
    	
    	addChild(vida3);
 	
-	dark.reserve(6);
-	light.reserve(3);
+	dark.reserve(5);
+	light.reserve(6);
+	fire.reserve(5);
 	
-	for (int i=2;i < dark.capacity()+4; i++){
+	for (int i=2;i < 10; i++){
 		
 		if(i%2==0){
 			ranOXmin+=(AN-130)/10;
@@ -162,10 +164,10 @@ bool HelloWorld::init()
 		}
 
 		ranx = cocos2d::RandomHelper::random_int(ranOXmin, ranOXmax);
-		rany = cocos2d::RandomHelper::random_int(30, 275);	
+		rany = cocos2d::RandomHelper::random_int(30, 130);	
 		
 		
-	if(i==3 || i== 6 || i==9){
+	if(i==3 || i==6 || i==9){
 		
 		luz = Sprite::createWithSpriteFrameName("luz.png");
     	//luz->setAnchorPoint(Vec2(0.1, 0.1));
@@ -177,8 +179,7 @@ bool HelloWorld::init()
     
 		addChild(luz);	
 		
-	}else
-	{
+	}else if(i==4 || i==7){
 		oscuridad1 = Sprite::createWithSpriteFrameName("oscuridad.png");
     	//oscuridad1->setAnchorPoint(Vec2(0.1, 0.1));
 		oscuridad1->setPosition(Vec2(ranx, rany));
@@ -187,18 +188,93 @@ bool HelloWorld::init()
     
     	dark.push_back(oscuridad1);
     
-		addChild(oscuridad1);	
+		addChild(oscuridad1);
+			
+	}else{
+		fuego = Sprite::createWithSpriteFrameName("fuego.png");
+		fuego->setPosition(Vec2(ranx, rany));
+    	fuego->setScale(AL*0.1/fuego->getContentSize().height);
+    	fuego->setTag(i);
+    
+    	fire.push_back(fuego);
+    
+		addChild(fuego);
+	}
+   	
+		
+	}
+	
+	ranOXmin=140;
+	ranOXmax=0;
+	
+		for (int i=12;i < 20; i++){
+		
+		if(i%2==0){
+			ranOXmin+=(AN-130)/10;
+			ranOXmax = ranOXmin+20;
+			
+			CCLOG("minimo X: %i",ranOXmin);
+
+		}else{
+			ranOXmin+=(AN-130)/10 +5;
+			ranOXmax= ranOXmin+15;
+
+			CCLOG("minimo X: %i",ranOXmin);
+		}
+
+		ranx = cocos2d::RandomHelper::random_int(ranOXmin, ranOXmax);
+		rany = cocos2d::RandomHelper::random_int(160, 275);	
+		
+		
+	if(i==14 || i==16 || i==18){
+		
+		luz = Sprite::createWithSpriteFrameName("luz.png");
+    	//luz->setAnchorPoint(Vec2(0.1, 0.1));
+		luz->setPosition(Vec2(ranx, rany));
+    	luz->setScale(AL*0.1/luz->getContentSize().height);
+    	luz->setTag(i);
+    
+    	light.push_back(luz);
+    
+		addChild(luz);	
+		
+	}else if(i==12 || i==17 || i==19){
+		oscuridad1 = Sprite::createWithSpriteFrameName("oscuridad.png");
+    	//oscuridad1->setAnchorPoint(Vec2(0.1, 0.1));
+		oscuridad1->setPosition(Vec2(ranx, rany));
+    	oscuridad1->setScale(AL*0.1/oscuridad1->getContentSize().height);
+    	oscuridad1->setTag(i);
+    
+    	dark.push_back(oscuridad1);
+    
+		addChild(oscuridad1);
+			
+	}else{
+		fuego = Sprite::createWithSpriteFrameName("fuego.png");
+		fuego->setPosition(Vec2(ranx, rany));
+    	fuego->setScale(AL*0.1/fuego->getContentSize().height);
+    	fuego->setTag(i);
+    
+    	fire.push_back(fuego);
+    
+		addChild(fuego);
 	}
    	
 		
 	}
 	
 	obu = Sprite::createWithSpriteFrameName("obu.png");
-    obu->setAnchorPoint(Vec2(0.1, 0.1));
+    //obu->setAnchorPoint(Vec2(0.1, 0.1));
 	obu->setPosition(Vec2(125, 100));
     obu->setScale(AL*0.1/obu->getContentSize().height);
     
     addChild(obu);
+    
+    cambioAgua = Sprite::createWithSpriteFrameName("aguaCambio.png");
+	cambioAgua->setPosition(Vec2(135, 250));
+    cambioAgua->setScale(AL*0.1/obu->getContentSize().height);
+    
+    addChild(cambioAgua);
    	
    	 obuPausa = Sprite::createWithSpriteFrameName("obu.png");
      obuPausa->setAnchorPoint(Vec2(0.1, 0.1));
@@ -232,7 +308,7 @@ bool HelloWorld::init()
 
 	/*FUNCION DE LLAMADO Y GENERADOR DE EVENTO DEL ACELEROMETRO*/
 	Device::setAccelerometerEnabled(true);
-	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(HelloWorld::onAcceleration, this));
+	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Nivel2::onAcceleration, this));
 	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 	
@@ -246,13 +322,13 @@ bool HelloWorld::init()
 }
 
 
-void HelloWorld::update(float dt){
+void Nivel2::update(float dt){
 	
 }
 
 
 
-void HelloWorld::crearViento(){
+void Nivel2::crearViento(){
 	
 	float X = obu->getPosition().x;
     float Y = obu->getPosition().y;
@@ -268,7 +344,7 @@ void HelloWorld::crearViento(){
 	
 }
 
-void HelloWorld::crearFuego(){
+void Nivel2::crearFuego(){
 	
 	float X = obu->getPosition().x;
     float Y = obu->getPosition().y;
@@ -283,7 +359,7 @@ void HelloWorld::crearFuego(){
     addChild(obu);
 	
 }
-void HelloWorld::crearAgua(){
+void Nivel2::crearAgua(){
 	
 	float X = obu->getPosition().x;
     float Y = obu->getPosition().y;
@@ -298,7 +374,7 @@ void HelloWorld::crearAgua(){
     addChild(obu);
 	
 }
-void HelloWorld::crearLuz(){
+void Nivel2::crearLuz(){
 	
 	float X = obu->getPosition().x;
     float Y = obu->getPosition().y;
@@ -313,7 +389,7 @@ void HelloWorld::crearLuz(){
     addChild(obu);
 	
 }
-void HelloWorld::crearTierra(){
+void Nivel2::crearTierra(){
 	
 	float X = obu->getPosition().x;
     float Y = obu->getPosition().y;
@@ -328,7 +404,7 @@ void HelloWorld::crearTierra(){
     addChild(obu);
 	
 }
-void HelloWorld::crearPlanta(){
+void Nivel2::crearPlanta(){
 	
 	float X = obu->getPosition().x;
     float Y = obu->getPosition().y;
@@ -345,7 +421,7 @@ void HelloWorld::crearPlanta(){
 }
 
 
-void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
+void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 {
     
     float posX= acc->x;
@@ -361,7 +437,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
       
    	   
    	   
-   	if(puntaje!=3 && vida>0 && pausa==0)   {
+   	if(puntaje!=6 && vida>0 && pausa==0)   {
    		obu->setVisible(true);
    		SPausa->setVisible(false); 
    		siguiente->setVisible(false); 
@@ -401,6 +477,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 				
 				Rect bbOscuridad = sp->getBoundingBox();
 				
+				
 				float X = sp->getPosition().x;
 		    	float Y = sp->getPosition().y;
 		    	
@@ -408,6 +485,53 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 		
 				
 				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.5) ){
+				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
+					degradado =250;
+					explosion->setOpacity(degradado);
+		
+					float posx = obu->getPosition().x;
+					float posy = obu->getPosition().y;
+				
+					obu->setVisible(false);
+					explosion->setPosition(Vec2(posx, posy));
+					explosion->setVisible(true);
+				
+					obu->setPosition(Vec2(120, 100));
+					obu->setVisible(true);
+						
+					vida--;
+					
+					if(vida==2){
+						vida3->setVisible(false);
+					}else if(vida==1){
+						vida2->setVisible(false);
+					}else if(vida==0){
+						vida1->setVisible(false);
+						siguiente->setPosition(390, AL/2-80);	
+					
+						obu->setPosition(200, AL/2-70);
+					}
+					
+				}
+	
+
+			}
+			
+		
+		for(auto sp : fire){	
+				
+				sp->setVisible(true);
+				
+				Rect bbFuego = sp->getBoundingBox();
+				
+				
+				float X = sp->getPosition().x;
+		    	float Y = sp->getPosition().y;
+		    	
+		    	float r = sp->getScaleX();
+		
+				
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.5)  && agua==0){
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
@@ -464,7 +588,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 					
 						label->setString(punt);
 						
-						if(puntaje==3){
+						if(puntaje==6){
 							obu->setPosition(200, AL/2-30);
 						}
 					
@@ -482,7 +606,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 			if(bbObu.intersectsRect(Rcerrar)){
 				//pausa = 1;
 				//obu->setPosition(X-20, Y);
-				HelloWorld::cerrarPantalla();
+				Nivel2::cerrarPantalla();
 			}else if(bbObu.intersectsRect(Rpausa)){
 				pausa = 1;
 				obu->setPosition(X, Y+20);
@@ -522,6 +646,13 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		light.erase(light.begin(),light.end());
 	   		
+	   		
+	   		for(auto sp: fire){
+	   			this->removeChild(sp,true);
+	   		}
+	   		
+	   		fire.erase(fire.begin(),fire.end());
+	   		
 	   		HPV = Sprite::createWithSpriteFrameName("adiosVaquero.png");
 	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
 			HPV->setPosition(Vec2(AN/2 +50, AL/2 +70));
@@ -537,13 +668,13 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		if(obuP.intersectsRect(SPe)){
 	   			
-	   			HelloWorld::reiniciar();
+	   			Nivel2::reiniciar();
 	   			
 	   		}
 	   		
 	   		
    		
-	   	}else if(puntaje==3){
+	   	}else if(puntaje==6){
 	   		obu->setVisible(true);
 	   		SPausa->setVisible(false); 
 	   		obuPausa->setVisible(false); 
@@ -579,6 +710,12 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		light.erase(light.begin(),light.end());
 	   		
+	   		for(auto sp: fire){
+	   			this->removeChild(sp,true);
+	   		}
+	   		
+	   		fire.erase(fire.begin(),fire.end());
+	   		
 	   		gano = Sprite::createWithSpriteFrameName("felicitaciones.png");
 	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
 			gano->setPosition(Vec2(AN/2 +50, AL/2 +60));
@@ -594,7 +731,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		if(obuS.intersectsRect(Si)){
 	   			
-	   			HelloWorld::siguienteNivel();
+	   			
 	   			
 	   		}
 	    
@@ -605,6 +742,12 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		for (auto sp : dark){
 	   			sp->setVisible(false);
 	   		}
+	   		
+	   		for(auto sp: fire){
+	   			sp->setVisible(false);
+	   		}
+	   		
+	   		
 	   		
 	   		obu->setVisible(false);
 	   		
@@ -637,7 +780,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 }
 
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
+void Nivel2::menuCloseCallback(Ref* pSender)
 {
     Director::getInstance()->end();
 
@@ -648,7 +791,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 
 
-void HelloWorld::cerrarPantalla(){
+void Nivel2::cerrarPantalla(){
     Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -657,7 +800,7 @@ void HelloWorld::cerrarPantalla(){
 }
 
 
-void HelloWorld::pausar(){
+void Nivel2::pausar(){
 	
     //Director::getInstance()->pause();
 	//Director::sharedDirector()->stopAnimation();
@@ -665,13 +808,7 @@ void HelloWorld::pausar(){
 }
 
 
-void HelloWorld::reiniciar(){
-	auto scene = HelloWorld::createScene();
-	Director::getInstance()->pushScene(scene);
-}
-
-
-void HelloWorld::siguienteNivel(){
+void Nivel2::reiniciar(){
 	auto scene = Nivel2::createScene();
 	Director::getInstance()->pushScene(scene);
 }
@@ -703,15 +840,15 @@ void HelloWorld::siguienteNivel(){
 		
 		/*
 		if(puntaje==20){
-			HelloWorld::crearViento();
+			Nivel2::crearViento();
 		}else if(puntaje==30){
-			HelloWorld::crearFuego();
+			Nivel2::crearFuego();
 		}else if(puntaje==40){
-			HelloWorld::crearAgua();
+			Nivel2::crearAgua();
 		}else if(puntaje==50){
-			HelloWorld::crearLuz();
+			Nivel2::crearLuz();
 		}else if(puntaje==60){
-			HelloWorld::crearTierra();
+			Nivel2::crearTierra();
 		}else if(puntaje==70){
-			HelloWorld::crearPlanta();
+			Nivel2::crearPlanta();
 		}*/
