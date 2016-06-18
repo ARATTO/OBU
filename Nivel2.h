@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 
 
-
+#include "sqlite3.h"
 class Nivel2 : public cocos2d::Layer
 {
 private:
@@ -28,8 +28,10 @@ private:
 	cocos2d::Sprite *siguiente;
 	cocos2d::Sprite *Spausa;
 	cocos2d::Sprite *HPV;
+	cocos2d::Sprite *nivel;
 	cocos2d::Label *label;
 	cocos2d::Label *salud;
+	cocos2d::Label *numNivel;
 	cocos2d::Label *felicidades;
 	std::vector<cocos2d::Sprite*> dark;
 	std::vector<cocos2d::Sprite*> light;
@@ -37,18 +39,25 @@ private:
 	cocos2d::Sprite *cerrar;
 	
 	
+	sqlite3 *pdb=NULL;
+	int result;
+	std::string sql;
+	
+	
 	float _shipPointsPerSecY;
 	int puntaje=0;
+	int puntajeL=0;
 	float AN;
 	float AL;
 	float degradado=250;
 	int ranx;
 	int rany;
-	int ranOXmin=140;
+	int ranOXmin=145;
 	int ranOXmax;
 	int vida =3;
 	int pausa =0;
 	int agua = 0;
+	int lvl2;
 
 	void crearViento();
 	void crearFuego();
@@ -56,6 +65,7 @@ private:
 	void crearLuz();
 	void crearTierra();
 	void crearPlanta();
+	void crearObu();
 	
 	
 	
@@ -67,14 +77,13 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void cerrarPantalla();
-    void pausar();
     void reiniciar();
+    void siguienteNivel();
     
     // implement the "static create()" method manually
     CREATE_FUNC(Nivel2);
     
     void  onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event);
-    void  update(float dt);
 };
 
 #endif // __Nivel2_SCENE_H__

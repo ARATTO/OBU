@@ -1,7 +1,9 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include <unistd.h>
 
 #include "Nivel2.h"
+#include "sqlite3.h"
 USING_NS_CC;
 
 Scene* HelloWorld::createScene(){
@@ -27,6 +29,29 @@ bool HelloWorld::init()
     {
         return false;
     }
+    
+    
+    pdb=NULL;//1
+    std::string path= FileUtils::getInstance()->getWritablePath()+"obu.s3db";//2
+
+    
+    
+    result=sqlite3_open(path.c_str(),&pdb);//3
+    if(result!=SQLITE_OK)
+    {
+        CCLOG("open database failed,  number%d",result);
+    }
+
+    sql="create table game(ID text primary key,puntaje text,nivel integer)";//1
+    result=sqlite3_exec(pdb,sql.c_str(),NULL,NULL,NULL);//1
+    if(result!=SQLITE_OK)
+        CCLOG("create table failed");
+
+
+
+
+//sqlite3_close(pdb);
+    
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -80,6 +105,7 @@ bool HelloWorld::init()
     
     this->addChild(salud, 2);
     
+    numNivel = Label::createWithTTF("1", "fonts/Marker Felt.ttf", 25);  
     
      
     Size TM = Director::getInstance()->getWinSize();
@@ -142,6 +168,17 @@ bool HelloWorld::init()
    	vida3->setScale(AL*0.15/vida3->getContentSize().height);
    	
    	addChild(vida3);
+   	
+   	
+   	nivel = Sprite::createWithSpriteFrameName("hexagono vida.png");
+ 	nivel->setPosition(Vec2(50, 80));
+   	nivel->setScale(AL*0.2/nivel->getContentSize().height);
+   	
+   	addChild(nivel);
+   	
+   	numNivel->setPosition(Vec2(50,80));
+    
+    this->addChild(numNivel, 3);
 	
 	dark.reserve(6);
 	light.reserve(3);
@@ -195,7 +232,7 @@ bool HelloWorld::init()
 	
 	obu = Sprite::createWithSpriteFrameName("obu.png");
     obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(125, 100));
+	obu->setPosition(Vec2(125, 200));
     obu->setScale(AL*0.1/obu->getContentSize().height);
     
     addChild(obu);
@@ -246,103 +283,7 @@ bool HelloWorld::init()
 }
 
 
-void HelloWorld::update(float dt){
-	
-}
 
-
-
-void HelloWorld::crearViento(){
-	
-	float X = obu->getPosition().x;
-    float Y = obu->getPosition().y;
-	
-	this->removeChild(obu);
-	
-	obu = Sprite::createWithSpriteFrameName("viento.png");
-    //obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(X, Y));
-    obu->setScale(AL*0.1/obu->getContentSize().height);
-    
-    addChild(obu);
-	
-}
-
-void HelloWorld::crearFuego(){
-	
-	float X = obu->getPosition().x;
-    float Y = obu->getPosition().y;
-	
-	this->removeChild(obu);
-	
-	obu = Sprite::createWithSpriteFrameName("fuego.png");
-    //obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(X, Y));
-    obu->setScale(AL*0.1/obu->getContentSize().height);
-    
-    addChild(obu);
-	
-}
-void HelloWorld::crearAgua(){
-	
-	float X = obu->getPosition().x;
-    float Y = obu->getPosition().y;
-	
-	this->removeChild(obu);
-	
-	obu = Sprite::createWithSpriteFrameName("agua.png");
-    //obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(X, Y));
-    obu->setScale(AL*0.1/obu->getContentSize().height);
-    
-    addChild(obu);
-	
-}
-void HelloWorld::crearLuz(){
-	
-	float X = obu->getPosition().x;
-    float Y = obu->getPosition().y;
-	
-	this->removeChild(obu);
-	
-	obu = Sprite::createWithSpriteFrameName("luz.png");
-    //obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(X, Y));
-    obu->setScale(AL*0.1/obu->getContentSize().height);
-    
-    addChild(obu);
-	
-}
-void HelloWorld::crearTierra(){
-	
-	float X = obu->getPosition().x;
-    float Y = obu->getPosition().y;
-	
-	this->removeChild(obu);
-	
-	obu = Sprite::createWithSpriteFrameName("tierra.png");
-    //obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(X, Y));
-    obu->setScale(AL*0.1/obu->getContentSize().height);
-    
-    addChild(obu);
-	
-}
-void HelloWorld::crearPlanta(){
-	
-	float X = obu->getPosition().x;
-    float Y = obu->getPosition().y;
-	
-	this->removeChild(obu);
-	
-	obu = Sprite::createWithSpriteFrameName("planta.png");
-   // obu->setAnchorPoint(Vec2(0.1, 0.1));
-	obu->setPosition(Vec2(X, Y));
-    obu->setScale(AL*0.1/obu->getContentSize().height);
-    
-    addChild(obu);
-	
-}
 
 
 void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
@@ -407,7 +348,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 		    	float r = sp->getScaleX();
 		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.5) ){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
@@ -419,7 +360,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 					explosion->setPosition(Vec2(posx, posy));
 					explosion->setVisible(true);
 				
-					obu->setPosition(Vec2(120, 100));
+					obu->setPosition(Vec2(120, 200));
 					obu->setVisible(true);
 						
 					vida--;
@@ -451,7 +392,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 		    	float r = sp->getScaleX();
 		    		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.5) ){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
 				
 				
 					if(sp->isVisible()){
@@ -466,6 +407,44 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 						
 						if(puntaje==3){
 							obu->setPosition(200, AL/2-30);
+							
+											 		
+					   		/*INSERTA EN LA TABLA*/
+					   		
+					   		   char **re;
+				    			int r,c;
+				    		
+					   		
+					   		sqlite3_get_table(pdb,"select * from game",&re,&r,&c,NULL);
+					   		
+					   		lvl1=r+1;
+					   		
+					 
+					   		std::string llave = StringUtils::format("%d",this->lvl1);
+							std::string score = StringUtils::format("%d",this->puntaje);
+			
+					   		sql="insert into game  values('"+ llave +  "','" + score + "',1)";
+					   		    
+				    			result=sqlite3_exec(pdb,sql.c_str(),NULL,NULL,NULL);
+				    				if(result!=SQLITE_OK)
+				        				CCLOG("FALLO DE INSERCION!");
+				        	/*INSERTA EN LA TABLA*/
+					   		
+					   		
+					   		/*SACA DE LA BASE*/
+					   		 
+				    			sqlite3_get_table(pdb,"select * from game",&re,&r,&c,NULL);//1
+				    				CCLOG("row is %d,column is %d",r,c);
+				
+							    for(int i=1;i<=r;i++)//2
+							    {
+							        for(int j=0;j<c;j++)
+							        {
+							            CCLOG("%s",re[i*c+j]);
+							        }
+							    }
+							    sqlite3_free_table(re);
+							/*SACA DE LA BASE*/
 						}
 					
 					}
@@ -485,7 +464,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 				HelloWorld::cerrarPantalla();
 			}else if(bbObu.intersectsRect(Rpausa)){
 				pausa = 1;
-				obu->setPosition(X, Y+20);
+				obu->setPosition(X, 175);
 			}
     		
    		}else if(vida==0){
@@ -522,6 +501,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		light.erase(light.begin(),light.end());
 	   		
+	   			   		
 	   		HPV = Sprite::createWithSpriteFrameName("adiosVaquero.png");
 	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
 			HPV->setPosition(Vec2(AN/2 +50, AL/2 +70));
@@ -544,6 +524,8 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
    		
 	   	}else if(puntaje==3){
+	  
+				   		
 	   		obu->setVisible(true);
 	   		SPausa->setVisible(false); 
 	   		obuPausa->setVisible(false); 
@@ -579,6 +561,8 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		light.erase(light.begin(),light.end());
 	   		
+	   	
+	   		
 	   		gano = Sprite::createWithSpriteFrameName("felicitaciones.png");
 	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
 			gano->setPosition(Vec2(AN/2 +50, AL/2 +60));
@@ -594,6 +578,12 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		if(obuS.intersectsRect(Si)){
 	   			
+	   			//std::chrono::seconds duration( 2 ); 
+				//std::this_thread::sleep_for( duration );
+				//usleep(2000000);
+				/*for(float q=0;q<1000000000;q++){
+					
+				}*/
 	   			HelloWorld::siguienteNivel();
 	   			
 	   		}
@@ -654,14 +644,6 @@ void HelloWorld::cerrarPantalla(){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
-}
-
-
-void HelloWorld::pausar(){
-	
-    //Director::getInstance()->pause();
-	//Director::sharedDirector()->stopAnimation();
-
 }
 
 

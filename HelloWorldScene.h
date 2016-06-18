@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-
+#include "sqlite3.h"
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -26,12 +26,19 @@ private:
 	cocos2d::Sprite *siguiente;
 	cocos2d::Sprite *Spausa;
 	cocos2d::Sprite *HPV;
+	cocos2d::Sprite *nivel;
 	cocos2d::Label *label;
 	cocos2d::Label *salud;
+	cocos2d::Label *numNivel;
 	cocos2d::Label *felicidades;
 	std::vector<cocos2d::Sprite*> dark;
 	std::vector<cocos2d::Sprite*> light;
 	cocos2d::Sprite *cerrar;
+	
+	
+	sqlite3 *pdb=NULL;
+	int result;
+	std::string sql;
 	
 	
 	float _shipPointsPerSecY;
@@ -41,17 +48,12 @@ private:
 	float degradado=250;
 	int ranx;
 	int rany;
-	int ranOXmin=140;
+	int ranOXmin=145;
 	int ranOXmax;
 	int vida =3;
 	int pausa =0;
+	int lvl1;
 
-	void crearViento();
-	void crearFuego();
-	void crearAgua();
-	void crearLuz();
-	void crearTierra();
-	void crearPlanta();
 	
 	
 	
@@ -63,7 +65,6 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void cerrarPantalla();
-    void pausar();
     void reiniciar();
     void siguienteNivel();
     
@@ -71,7 +72,6 @@ public:
     CREATE_FUNC(HelloWorld);
     
     void  onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event);
-    void  update(float dt);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

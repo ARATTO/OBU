@@ -2,7 +2,8 @@
 #include "SimpleAudioEngine.h"
 
 
-
+#include "Nivel3.h"
+#include "sqlite3.h"
 USING_NS_CC;
 
 Scene* Nivel2::createScene(){
@@ -27,6 +28,18 @@ bool Nivel2::init()
     if ( !Layer::init() )
     {
         return false;
+    }
+    
+    
+    pdb=NULL;//1
+    std::string path= FileUtils::getInstance()->getWritablePath()+"obu.s3db";//2
+
+    
+    
+    result=sqlite3_open(path.c_str(),&pdb);//3
+    if(result!=SQLITE_OK)
+    {
+        CCLOG("open database failed,  number%d",result);
     }
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -81,7 +94,7 @@ bool Nivel2::init()
     
     this->addChild(salud, 2);
     
-    
+    numNivel = Label::createWithTTF("2", "fonts/Marker Felt.ttf", 25); 
      
     Size TM = Director::getInstance()->getWinSize();
 
@@ -142,6 +155,16 @@ bool Nivel2::init()
 	vida3->setPosition(Vec2(50, 140));
    	vida3->setScale(AL*0.15/vida3->getContentSize().height);
    	
+   	nivel = Sprite::createWithSpriteFrameName("hexagono vida.png");
+ 	nivel->setPosition(Vec2(50, 80));
+   	nivel->setScale(AL*0.2/nivel->getContentSize().height);
+   	
+   	addChild(nivel);
+   	
+   	numNivel->setPosition(Vec2(50,80));
+    
+    this->addChild(numNivel, 3);
+   	
    	addChild(vida3);
 	
 	dark.reserve(5);
@@ -164,7 +187,7 @@ bool Nivel2::init()
 		}
 
 		ranx = cocos2d::RandomHelper::random_int(ranOXmin, ranOXmax);
-		rany = cocos2d::RandomHelper::random_int(30, 130);	
+		rany = cocos2d::RandomHelper::random_int(40, 130);	
 		
 		
 	if(i==3 || i==6 || i==9){
@@ -322,10 +345,22 @@ bool Nivel2::init()
 }
 
 
-void Nivel2::update(float dt){
+
+void Nivel2::crearObu(){
+	
+	float X = obu->getPosition().x;
+    float Y = obu->getPosition().y;
+	
+	this->removeChild(obu);
+	
+	obu = Sprite::createWithSpriteFrameName("obu.png");
+    //obu->setAnchorPoint(Vec2(0.1, 0.1));
+	obu->setPosition(Vec2(X, Y));
+    obu->setScale(AL*0.1/obu->getContentSize().height);
+    
+    addChild(obu);
 	
 }
-
 
 
 void Nivel2::crearViento(){
@@ -437,7 +472,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
       
    	   
    	   
-   	if(puntaje!=6 && vida>0 && pausa==0)   {
+   	if(puntajeL!=6 && vida>0 && pausa==0)   {
    		obu->setVisible(true);
    		SPausa->setVisible(false); 
    		siguiente->setVisible(false); 
@@ -453,7 +488,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
     	 CCLOG("aca es X: %f", X);
    	     CCLOG("aca es Y: %f", Y);
    		
-   		  if(   (X<AN-25 && Y<AL-40)  && (X>115 && Y>15)  )  {
+   		  if(   (X<AN-25 && Y<AL-40)  && (X>115 && Y>30)  )  {
     			obu->setPosition(X, Y);
     			degradado = degradado -10;
     	
@@ -461,6 +496,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
     					degradado =0;
     			}
 				explosion->setOpacity(degradado);
+				
     		}
     		
     		
@@ -469,7 +505,14 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 			float alto = obu->getScaleY();
 		
     		Rect bbObu = obu->getBoundingBox();	
-
+    		
+    		Rect Cagua = cambioAgua->getBoundingBox();
+    		
+    		if(bbObu.intersectsRect(Cagua)){
+    			agua=1;
+    			cambioAgua->setVisible(false);
+    			Nivel2::crearAgua();
+    		}
 	
 			for(auto sp : dark){	
 				
@@ -484,7 +527,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		    	float r = sp->getScaleX();
 		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.5) ){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
@@ -496,8 +539,11 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 					explosion->setPosition(Vec2(posx, posy));
 					explosion->setVisible(true);
 				
-					obu->setPosition(Vec2(120, 100));
+					obu->setPosition(Vec2(120, 150));
 					obu->setVisible(true);
+					
+					cambioAgua->setVisible(true);
+					Nivel2::crearObu();
 						
 					vida--;
 					
@@ -520,7 +566,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		
 		for(auto sp : fire){	
 				
-				sp->setVisible(true);
+				//sp->setVisible(true);
 				
 				Rect bbFuego = sp->getBoundingBox();
 				
@@ -531,7 +577,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		    	float r = sp->getScaleX();
 		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.5)  && agua==0){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5)  && agua==0){
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
@@ -559,6 +605,20 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 						obu->setPosition(200, AL/2-70);
 					}
 					
+				}else if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5)  && agua==1){
+					
+					if(sp->isVisible()){
+						
+						sp->setVisible(false);
+					
+						puntaje+=2;
+			
+						std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
+					
+						label->setString(punt);
+											
+					}
+					
 				}
 	
 
@@ -575,7 +635,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		    	float r = sp->getScaleX();
 		    		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+0.5) ){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
 				
 				
 					if(sp->isVisible()){
@@ -583,13 +643,52 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 						sp->setVisible(false);
 					
 						puntaje++;
+						puntajeL++;
 			
 						std::string punt = StringUtils::format("puntaje: %d",this->puntaje);
 					
 						label->setString(punt);
 						
-						if(puntaje==6){
+						if(puntajeL==6){
 							obu->setPosition(200, AL/2-30);
+							
+							
+							/*INSERTA EN LA TABLA*/
+					   		
+					   		   char **re;
+				    			int r,c;
+
+					   		
+					   		sqlite3_get_table(pdb,"select * from game",&re,&r,&c,NULL);
+					   		
+					   		lvl2=r+1;
+					   		
+					   		std::string llave2 = StringUtils::format("%d",this->lvl2);
+							std::string score = StringUtils::format("%d",this->puntaje);
+			
+					   		sql="insert into game  values('"+ llave2 +  "','" + score + "',2)";
+					   		    
+				    			result=sqlite3_exec(pdb,sql.c_str(),NULL,NULL,NULL);
+				    				if(result!=SQLITE_OK)
+				        				CCLOG("FALLO DE INSERCION!");
+				        	/*INSERTA EN LA TABLA*/
+					   		
+					   		
+					   		/*SACA DE LA BASE*/
+					   		 
+				    			sqlite3_get_table(pdb,"select * from game",&re,&r,&c,NULL);//1
+				    				CCLOG("row is %d,column is %d",r,c);
+				
+							    for(int i=1;i<=r;i++)//2
+							    {
+							        for(int j=0;j<c;j++)
+							        {
+							            CCLOG("%s",re[i*c+j]);
+							        }
+							    }
+							    sqlite3_free_table(re);
+							/*SACA DE LA BASE*/
+							
 						}
 					
 					}
@@ -609,7 +708,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 				Nivel2::cerrarPantalla();
 			}else if(bbObu.intersectsRect(Rpausa)){
 				pausa = 1;
-				obu->setPosition(X, Y+20);
+				obu->setPosition(X, 175);
 			}
     		
    		}else if(vida==0){
@@ -653,6 +752,8 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		
 	   		fire.erase(fire.begin(),fire.end());
 	   		
+	   		this->removeChild(cambioAgua,true);
+	   		
 	   		HPV = Sprite::createWithSpriteFrameName("adiosVaquero.png");
 	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
 			HPV->setPosition(Vec2(AN/2 +50, AL/2 +70));
@@ -674,7 +775,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		
 	   		
    		
-	   	}else if(puntaje==6){
+	   	}else if(puntajeL==6){
 	   		obu->setVisible(true);
 	   		SPausa->setVisible(false); 
 	   		obuPausa->setVisible(false); 
@@ -716,6 +817,8 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		
 	   		fire.erase(fire.begin(),fire.end());
 	   		
+	   		this->removeChild(cambioAgua,true);
+	   		
 	   		gano = Sprite::createWithSpriteFrameName("felicitaciones.png");
 	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
 			gano->setPosition(Vec2(AN/2 +50, AL/2 +60));
@@ -731,7 +834,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		
 	   		if(obuS.intersectsRect(Si)){
 	   			
-	   			
+	   			Nivel2::siguienteNivel();
 	   			
 	   		}
 	    
@@ -743,9 +846,9 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   			sp->setVisible(false);
 	   		}
 	   		
-	   		for(auto sp: fire){
+	   		/*for(auto sp: fire){
 	   			sp->setVisible(false);
-	   		}
+	   		}*/
 	   		
 	   		
 	   		
@@ -800,16 +903,16 @@ void Nivel2::cerrarPantalla(){
 }
 
 
-void Nivel2::pausar(){
-	
-    //Director::getInstance()->pause();
-	//Director::sharedDirector()->stopAnimation();
-
-}
 
 
 void Nivel2::reiniciar(){
 	auto scene = Nivel2::createScene();
+	Director::getInstance()->pushScene(scene);
+}
+
+
+void Nivel2::siguienteNivel(){
+	auto scene = Nivel3::createScene();
 	Director::getInstance()->pushScene(scene);
 }
 
