@@ -1,5 +1,7 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "IntroGeneral.h"
+#include "Niveles.h"
 
 
 USING_NS_CC;
@@ -45,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #else
         glview = GLViewImpl::create("OBU");
 #endif
-		glview->setFrameSize(800.0f, 480.0f);
+		//glview->setFrameSize(800.0f, 480.0f);
 		director->setOpenGLView(glview);
     }
 

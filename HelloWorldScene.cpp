@@ -47,7 +47,7 @@ bool HelloWorld::init()
 	CCLOG("alto: %f  ancho: %f", AL, AN);
 	
 	//////////////////////////////////////
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Motto.plist");
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Intro.plist");
 	//////////////////////////////////////
 
 	//ANIMACION COCOS
@@ -59,12 +59,20 @@ bool HelloWorld::init()
 	this->addChild(cocosLogo, 1);
 
 	//ANIMACION OBU
-	auto OBULogo = Sprite::createWithSpriteFrameName("prueba.png");
+	auto OBULogo = Sprite::createWithSpriteFrameName("OBU_LOGO_COMPLETO.png");
 	OBULogo->setPosition(Vec2(AN / 2, AL / 2));
 	OBULogo->setScaleY(AL*0.4 / OBULogo->getContentSize().height);
 	OBULogo->setScaleX(AN*0.8 / OBULogo->getContentSize().width);
 	OBULogo->setOpacity(0);
 	this->addChild(OBULogo, 1);
+
+	//ANIMACION HailBEHELIT
+	auto HailBEHELIT = Sprite::createWithSpriteFrameName("behelit.png");
+	HailBEHELIT->setPosition(Vec2(AN / 2, AL / 6));
+	HailBEHELIT->setScaleY(AL*0.3 / HailBEHELIT->getContentSize().height);
+	HailBEHELIT->setScaleX(AN*0.6 / HailBEHELIT->getContentSize().width);
+	HailBEHELIT->setOpacity(0);
+	this->addChild(HailBEHELIT, 2);
 
 	//ANIMACION BEHELIT
 	auto BEHELITLogo = Sprite::createWithSpriteFrameName("behelit_logo.jpg");
@@ -84,11 +92,16 @@ bool HelloWorld::init()
 
 	auto fadeIn3 = FadeIn::create(5.0f);
 	auto fadeOut3 = FadeOut::create(1.0f);
-	auto delay3 = DelayTime::create(1);
+	auto delay3 = DelayTime::create(3);
+
+	auto fadeIn4 = FadeIn::create(5.0f);
+	auto fadeOut4 = FadeOut::create(1.0f);
+	auto delay4 = DelayTime::create(3);
 
 
 	auto delayMedio1 = DelayTime::create(7);
 	auto delayMedio2 = DelayTime::create(14);
+	auto delayMedio3 = DelayTime::create(14);
 
 
 	auto callbackJump = CallFunc::create([]() {
@@ -105,11 +118,15 @@ bool HelloWorld::init()
 	OBULogo->runAction(
 		Sequence::create(delayMedio1,fadeIn2, delay2, fadeOut2, nullptr)
 		);
+
 	
 	BEHELITLogo->runAction(
-		Sequence::create(delayMedio2,fadeIn3, delay3, fadeOut3, callbackJump, nullptr)
+		Sequence::create(delayMedio3, fadeIn4, delay4, fadeOut4, nullptr)
 		);
 
+	HailBEHELIT->runAction(
+		Sequence::create(delayMedio2, fadeIn3, delay3, fadeOut3, callbackJump, nullptr)
+		);
 
     return true;
 }

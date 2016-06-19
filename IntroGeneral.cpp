@@ -59,9 +59,9 @@ bool IntroGeneral::init()
 	
 	/////////////////////////////LOGO
 	
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Motto.plist");
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("MottoMenu.plist");
 	
-	auto fondo = Sprite::createWithSpriteFrameName("fondo.png");
+	auto fondo = Sprite::createWithSpriteFrameName("fondo_menu.png");
 	//fondo->setAnchorPoint(Vec2::ZERO);
 	fondo->setPosition(Vec2(AN/2,AL/2));
 	fondo->setScaleY(AL/ fondo->getContentSize().height);
@@ -69,39 +69,81 @@ bool IntroGeneral::init()
 	addChild(fondo);
 
 	/////////////////////////////
-
 	//CREATE LOGO
-	auto logo = Sprite::createWithSpriteFrameName("OBU_LOGO.png");
-	logo->setPosition(Vec2(AN/2, AL/2));
-	logo->setScaleY(AL*0.7 / logo->getContentSize().height);
-	logo->setScaleX(AN*0.5 / logo->getContentSize().width);
-	/*
-	logo->setAnchorPoint(Vec2(0, 0));
-	logo->setPosition(Vec2(ancho*0.5 - logo->getContentSize().width*0.5, alto*0.8 - logo->getContentSize().height*0.5));
-	logo->setScale(0.1);
-	*/
+	//ANIMACION OBU
+	auto OBULogo = Sprite::createWithSpriteFrameName("OBU_LOGO.png");
+	OBULogo->setPosition(Vec2(AN / 5, AL - AL*0.3));
+	OBULogo->setScaleY(AL*0.1 / OBULogo->getContentSize().height);
+	OBULogo->setScaleX(AN*0.1 / OBULogo->getContentSize().width);
 
-	//ANIMACION LOGO
+	this->addChild(OBULogo, 2);
+
 	////Repeticion Infinita !!
-	auto fadeIn = FadeIn::create(5.0f);
-	logo->runAction(fadeIn);
+	auto scaleToMin = ScaleTo::create(1.0f, 0.1f);
+	auto scaleToMax = ScaleTo::create(1.0f, 0.3f);
+	auto delay = DelayTime::create(0.1);
+	
+	auto action = (ActionInterval*)Sequence::create(scaleToMin, delay, scaleToMax, delay, NULL);
+	OBULogo->runAction(RepeatForever::create(action));
 
-	auto fadeOut = FadeOut::create(10.0f);
-	auto delay = DelayTime::create(2);
+	/////////////////////////////
+	//CREATE BOTONES
+	//BTN JUGAR
+	btn_jugar = Sprite::createWithSpriteFrameName("BTN_JUGAR.png");
+	btn_jugar->setPosition(Vec2(AN - AN *0.2 , AL - AL*0.2));
+	btn_jugar->setScaleY(AL*0.1 / btn_jugar->getContentSize().height);
+	btn_jugar->setScaleX(AN*0.2 / btn_jugar->getContentSize().width);
 
-	auto action = (ActionInterval*)Sequence::create(fadeIn, delay, fadeOut, delay, NULL);
-	logo->runAction(RepeatForever::create(action));
+	this->addChild(btn_jugar, 2);
 
-	this->addChild(logo, 1);
+	//BTN NIVELES
+	btn_niveles = Sprite::createWithSpriteFrameName("BTN_NIVELES.png");
+	btn_niveles->setPosition(Vec2(AN - AN *0.2, AL - AL*0.4));
+	btn_niveles->setScaleY(AL*0.1 / btn_niveles->getContentSize().height);
+	btn_niveles->setScaleX(AN*0.2 / btn_niveles->getContentSize().width);
+
+	this->addChild(btn_niveles, 2);
+
+	//BTN PUNTAJE
+	btn_puntaje = Sprite::createWithSpriteFrameName("BTN_PUNTAJE.png");
+	btn_puntaje->setPosition(Vec2(AN - AN *0.2, AL - AL*0.6));
+	btn_puntaje->setScaleY(AL*0.1 / btn_puntaje->getContentSize().height);
+	btn_puntaje->setScaleX(AN*0.2 / btn_puntaje->getContentSize().width);
+
+	this->addChild(btn_puntaje, 2);
+
+	//BTN CREDITOS
+	btn_creditos = Sprite::createWithSpriteFrameName("BTN_CREDITOS.png");
+	btn_creditos->setPosition(Vec2(AN - AN *0.2, AL - AL*0.8));
+	btn_creditos->setScaleY(AL*0.1 / btn_creditos->getContentSize().height);
+	btn_creditos->setScaleX(AN*0.2 / btn_creditos->getContentSize().width);
+
+	this->addChild(btn_creditos, 2);
+
+	//BTN CREDITOS
+	btn_cerrar = Sprite::createWithSpriteFrameName("CloseSelected.png");
+	btn_cerrar->setPosition(Vec2(AN - AN *0.95, AL - AL*0.8));
+	btn_cerrar->setScaleY(AL*0.4 / btn_creditos->getContentSize().height);
+	btn_cerrar->setScaleX(AN*1.2 / btn_creditos->getContentSize().width);
+
+	this->addChild(btn_cerrar, 2);
+	/////////////////////////////
+	//CREAR OBU
+	obu = Sprite::createWithSpriteFrameName("obu.png");
+	obu->setAnchorPoint(Vec2(0.1, 0.1));
+	obu->setPosition(Vec2(AN/2, AL/2));
+	obu->setScale(AL*0.1 / obu->getContentSize().height);
+
+	addChild(obu,2);
 
 	////////////////////////////////////////////////////////////////////////////////
-
+	//CERRAR MENU PAPU
 	auto closeItem = MenuItemImage::create(
 		"CloseNormal.png",
 		"CloseSelected.png",
 		CC_CALLBACK_1(IntroGeneral::menuCloseCallback, this));
 
-	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2, origin.y + closeItem->getContentSize().height / 2));
+	closeItem->setPosition(Vec2(AN - AN *0.95, AL - AL*0.8));
 
 	// create menu, it's an autorelease object
 	auto menu = Menu::create(closeItem, NULL);
@@ -109,60 +151,32 @@ bool IntroGeneral::init()
 	this->addChild(menu, 1);
 	///////////////////////////////////////////////////////////////////////////////////
 	//MENU PAPU
-
 	Vector <MenuItem*> MenuItems;
-
 	auto nuevo = MenuItemImage::create("boton/Normal.png", "boton/Press.png", CC_CALLBACK_1(IntroGeneral::intentObuWorld, this));
 	nuevo->setPosition(Vec2(origin.x, origin.y - alto*0.2));
 	//nuevo->addChild(nuevo, 1);
 	MenuItems.pushBack(nuevo);
-
-
 	auto lvl = MenuItemImage::create("boton/Normal.png", "boton/Press.png", CC_CALLBACK_1(IntroGeneral::intentNiveles, this));
 	lvl->setPosition(Vec2(origin.x, origin.y - alto*0.3));
 	//lvl->addChild(lvl, 1);
 	MenuItems.pushBack(lvl);
-
 	auto credito = MenuItemImage::create("boton/Normal.png", "boton/Press.png", CC_CALLBACK_1(IntroGeneral::intentCreditos, this));
 	credito->setPosition(Vec2(origin.x, origin.y - alto*0.4));
 	//credito->addChild(credito,1);
 	MenuItems.pushBack(credito);
-
-
 	//miMenu->setAnchorPoint(Vec2::ZERO);
 	//miMenu->setPosition(Vec2(ancho*0.5 - miMenu->getContentSize().width*0.5, alto*0.4 - miMenu->getContentSize().height*0.5));
-
 	auto miMenu = Menu::createWithArray(MenuItems);
 	this->addChild(miMenu, 1);
-
-
-	/*
 	/////////////////////////////
-	// 3. add your codes below...
-
-	// add a label shows "Hello World"
-	// create and initialize a label
-
-	auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-
-	// position the label on the center of the screen
-	label->setPosition(Vec2(origin.x + visibleSize.width/2,
-	origin.y + visibleSize.height - label->getContentSize().height));
-
-	// add the label as a child to this layer
-	this->addChild(label, 1);
-
-	// add "HelloWorld" splash screen"
-	auto sprite = Sprite::create("HelloWorld.png");
-
-	// position the sprite on the center of the screen
-	sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-	// add the sprite as a child to this layer
-	this->addChild(sprite, 0);
-	*/
-	//////////////////////////////
 	
+	
+	Device::setAccelerometerEnabled(true);
+	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(IntroGeneral::onAcceleration, this));
+
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	
+
 	return true;
 }
 
@@ -194,7 +208,57 @@ void IntroGeneral::intentCreditos(Ref* pSender)
 {
 
 	auto scene = Creditos::createScene();
-	Director::getInstance()->pushScene(scene);
+	Director::getInstance()->replaceScene(scene);
+
+}
+
+void IntroGeneral::onAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * event)
+{
+	float posX = acc->x;
+	float posY = acc->y;
+
+	Size screenSize = Director::getInstance()->getWinSize();
+
+	float w = screenSize.width;
+	float h = screenSize.height;
+
+	obu->setVisible(true);
+
+	float X = obu->getPosition().x;
+	float Y = obu->getPosition().y;
+
+	X = X + (posX* w *0.03);
+	Y = Y + (posY* h *0.03);
+	
+	obu->setPosition(X, Y);
+
+	Rect Rcerrar = btn_cerrar->getBoundingBox();
+	Rect Rjugar = btn_jugar->getBoundingBox();
+	Rect Rniveles = btn_niveles->getBoundingBox();
+	Rect Rpuntaje = btn_puntaje->getBoundingBox();
+	Rect Rcreditos = btn_creditos->getBoundingBox();
+
+
+	Rect bbObu = obu->getBoundingBox();
+
+
+	if (bbObu.intersectsRect(Rcerrar)) {
+
+		IntroGeneral::menuCloseCallback(this);
+	}
+	else if (bbObu.intersectsRect(Rjugar)) {
+		IntroGeneral::intentObuWorld(this);
+	}
+	else if (bbObu.intersectsRect(Rniveles)) {
+		IntroGeneral::intentNiveles(this);
+	}
+	else if (bbObu.intersectsRect(Rpuntaje)) {
+		
+	}
+	else if (bbObu.intersectsRect(Rcreditos)) {
+		IntroGeneral::intentCreditos(this);
+	}
+	
 
 }
 

@@ -6,6 +6,17 @@
 
 class IntroGeneral: public cocos2d::Layer
 {
+private:
+
+	cocos2d::Sprite *obu;
+	cocos2d::Sprite *btn_jugar;
+	cocos2d::Sprite *btn_niveles;
+	cocos2d::Sprite *btn_puntaje;
+	cocos2d::Sprite *btn_creditos;
+	cocos2d::Sprite *btn_cerrar;
+
+	float AN;
+	float AL;
 
 public:
 	static cocos2d::Scene* createScene();
@@ -21,6 +32,8 @@ public:
 	
 	// implement the "static create()" method manually
 	CREATE_FUNC(IntroGeneral);
+
+	void  onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event);
 
 };
 
