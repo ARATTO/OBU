@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>CloseNormal.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,3962},{40,40}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{40,40}}</string>
+				<key>sourceSize</key>
+				<string>{40,40}</string>
+			</dict>
+
+			<key>CloseSelected.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,4003},{37,37}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{2,1},{37,37}}</string>
+				<key>sourceSize</key>
+				<string>{40,40}</string>
+			</dict>
+
+			<key>OBU_LOGO.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,2923},{1180,1038}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{4,77},{1180,1038}}</string>
+				<key>sourceSize</key>
+				<string>{1200,1200}</string>
+			</dict>
+
+			<key>behelit_logo.jpg</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1181,2923},{960,600}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{960,600}}</string>
+				<key>sourceSize</key>
+				<string>{960,600}</string>
+			</dict>
+
+			<key>cocos_logo.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1627,3524},{195,270}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{195,270}}</string>
+				<key>sourceSize</key>
+				<string>{195,270}</string>
+			</dict>
+
+			<key>fondo.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{3300,1800}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{3300,1800}}</string>
+				<key>sourceSize</key>
+				<string>{3300,1800}</string>
+			</dict>
+
+			<key>obu.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1181,3524},{445,445}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{2,2},{445,445}}</string>
+				<key>sourceSize</key>
+				<string>{450,450}</string>
+			</dict>
+
+			<key>prueba.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1801},{3267,1121}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{13,6},{3267,1121}}</string>
+				<key>sourceSize</key>
+				<string>{3300,1140}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{4096,4096}</string>
+			<key>textureFileName</key>
+			<string>Motto.png</string>
+			</dict>
+		</dict>
+</plist>

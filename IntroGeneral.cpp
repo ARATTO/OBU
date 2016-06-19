@@ -44,25 +44,42 @@ bool IntroGeneral::init()
 	double alto = visibleSize.height;
 	double ancho = visibleSize.width;
 
+
+	Size TM = Director::getInstance()->getWinSize();
+
+	float AN = TM.width;
+	float AL = TM.height;
+
 	////////////////////////////////////
 	//Musica
 	//CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/mainMarcos.mp3");
 	
 	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic("audio/mainMarcos.mp3", true);
+	audio->playBackgroundMusic("audio/intro1.mp3", true);
 	
 	/////////////////////////////LOGO
-	/*
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Elementos.plist");
-	logo = Sprite::createWithSpriteFrameName("OBU_LOGO.png");
-	*/
+	
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Motto.plist");
+	
+	auto fondo = Sprite::createWithSpriteFrameName("fondo.png");
+	//fondo->setAnchorPoint(Vec2::ZERO);
+	fondo->setPosition(Vec2(AN/2,AL/2));
+	fondo->setScaleY(AL/ fondo->getContentSize().height);
+	fondo->setScaleX(AN/ fondo->getContentSize().width);
+	addChild(fondo);
+
 	/////////////////////////////
 
 	//CREATE LOGO
-	auto logo = Sprite::create("OBU_LOGO.png");
+	auto logo = Sprite::createWithSpriteFrameName("OBU_LOGO.png");
+	logo->setPosition(Vec2(AN/2, AL/2));
+	logo->setScaleY(AL*0.7 / logo->getContentSize().height);
+	logo->setScaleX(AN*0.5 / logo->getContentSize().width);
+	/*
 	logo->setAnchorPoint(Vec2(0, 0));
 	logo->setPosition(Vec2(ancho*0.5 - logo->getContentSize().width*0.5, alto*0.8 - logo->getContentSize().height*0.5));
-	logo->setScale(0.3);
+	logo->setScale(0.1);
+	*/
 
 	//ANIMACION LOGO
 	////Repeticion Infinita !!

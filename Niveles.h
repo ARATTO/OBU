@@ -10,6 +10,8 @@ public:
 
 	virtual bool init();
 
+	void intentRegresar(Ref * pSender);
+
 	// implement the "static create()" method manually
 	CREATE_FUNC(Niveles);
 };

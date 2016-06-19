@@ -1,4 +1,5 @@
 #include "ObuWorld.h"
+#include "SimpleAudioEngine.h""
 #include "cocos2d.h"
 
 
@@ -35,6 +36,16 @@ bool ObuWorld::init()
 
 	double alto = visibleSize.height;
 	double ancho = visibleSize.width;
+
+
+	////////////////////////////////////
+	//Musica
+	//CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("audio/mainMarcos.mp3");
+
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic("audio/mainMarcos.mp3", true);
+
+
 
 	////////////////////////////////////
 

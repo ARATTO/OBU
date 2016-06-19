@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #else
         glview = GLViewImpl::create("OBU");
 #endif
-		//glview->setFrameSize(800.0f, 480.0f);
+		glview->setFrameSize(800.0f, 480.0f);
 		director->setOpenGLView(glview);
     }
 
