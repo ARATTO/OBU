@@ -308,13 +308,40 @@ bool Nivel2::init()
 	 addChild(obuPausa);
 	 
 	 siguiente = Sprite::createWithSpriteFrameName("siguiente.png");
-     siguiente->setAnchorPoint(Vec2(0.1, 0.1));
-	 siguiente->setPosition(Vec2(125, 100));
-     siguiente->setScale(AL*0.2/obu->getContentSize().height);
+   	 siguiente->setPosition(Vec2(125, 100));
+     siguiente->setScale(AL*0.2/siguiente->getContentSize().height);
      siguiente->setVisible(false);
     
 	 addChild(siguiente);
 	 
+	 atras= Sprite::createWithSpriteFrameName("atras.png");
+   	 atras->setPosition(Vec2(125, 100));
+     atras->setScale(AL*0.2/atras->getContentSize().height);
+     atras->setVisible(false);
+    
+	 addChild(atras);
+	 
+	 home = Sprite::createWithSpriteFrameName("home.png");
+   	 home->setPosition(Vec2(125, 100));
+     home->setScale(AL*0.2/home->getContentSize().height);
+     home->setVisible(false);
+    
+	 addChild(home);
+	 
+	 reinicio = Sprite::createWithSpriteFrameName("reiniciar.png");
+   	 reinicio->setPosition(Vec2(125, 100));
+     reinicio->setScale(AL*0.2/reinicio->getContentSize().height);
+     reinicio->setVisible(false);
+    
+	 addChild(reinicio);
+	 
+
+	 play = Sprite::createWithSpriteFrameName("play.png");
+   	 play->setPosition(Vec2(125, 100));
+     play->setScale(AL*0.2/play->getContentSize().height);
+     play->setVisible(false);
+    
+	 addChild(play);
 	 
 	 SPausa = Sprite::createWithSpriteFrameName("pausa.png");
 	 SPausa->setAnchorPoint(Vec2(0.1, 0.1));
@@ -755,17 +782,16 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		this->removeChild(cambioAgua,true);
 	   		
 	   		HPV = Sprite::createWithSpriteFrameName("adiosVaquero.png");
-	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
 			HPV->setPosition(Vec2(AN/2 +50, AL/2 +70));
 	    	HPV->setScale(AL*0.4/HPV->getContentSize().height);
 	    	
 	    	addChild(HPV);
 	    	
-	    	
-	   		siguiente->setVisible(true); 
+	    	reinicio->setPosition(390, 100);
+	   		reinicio->setVisible(true); 
 	   		
 	   		Rect obuP = obu->getBoundingBox();
-	   		Rect SPe =  siguiente->getBoundingBox();
+	   		Rect SPe =  reinicio->getBoundingBox();
 	   		
 	   		if(obuP.intersectsRect(SPe)){
 	   			
@@ -819,24 +845,30 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		
 	   		this->removeChild(cambioAgua,true);
 	   		
-	   		gano = Sprite::createWithSpriteFrameName("felicitaciones.png");
-	    	//gano->setAnchorPoint(Vec2(0.1, 0.1));
-			gano->setPosition(Vec2(AN/2 +50, AL/2 +60));
-	    	gano->setScale(AL*0.2/gano->getContentSize().height);
+	   		gano = Sprite::createWithSpriteFrameName("felicidades.png");
+			gano->setPosition(Vec2(AN/2 +50, AL/2 +50));
+	    	gano->setScale(AL*0.3/gano->getContentSize().height);
 	    	
 	    	addChild(gano);	
 	    	
-	    	siguiente->setPosition(390, AL/2-40);	
+	    	siguiente->setPosition(390, AL/2-20);	
 	   		siguiente->setVisible(true); 
+	   		
+	   		home->setPosition(160, AL/2-20);	
+	   		home->setVisible(true); 
 	   		
 	   		Rect obuS = obu->getBoundingBox();
 	   		Rect Si =  siguiente->getBoundingBox();
+	   		Rect HO =  home->getBoundingBox();
 	   		
 	   		if(obuS.intersectsRect(Si)){
 	   			
 	   			Nivel2::siguienteNivel();
 	   			
-	   		}
+	   		}else if(obuS.intersectsRect(HO)){
+	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
+	   			
+			   }
 	    
 	    	
 	   	}
@@ -863,18 +895,28 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		
 	   		obuPausa->setVisible(true); 
 	   		
-	   		siguiente->setPosition(390, AL/2-40);	
-	   		siguiente->setVisible(true); 
+	   		play->setPosition(390, AL/2 -20);	
+	   		play->setVisible(true); 
+	   		
+	   		home->setPosition(160, AL/2 -20);	
+	   		home->setVisible(true); 
+	   		
+	   		
 	   		SPausa->setVisible(true);
 	   		
 	   		Rect OB = obuPausa->getBoundingBox();
-	   		Rect S =  siguiente->getBoundingBox();
+	   		Rect S =  play->getBoundingBox();
+	   		Rect H =  home->getBoundingBox();
 	   		
 	   		if(OB.intersectsRect(S)){
 	   			pausa=0;
 	   			 obuPausa->setPosition(Vec2(200, 100));
+	   			 play->setVisible(false);
+	   			 	home->setVisible(false); 
+	   		}else if(OB.intersectsRect(H)){
+	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
 	   			
-	   		}
+			   }
 	   	
 	   		
 	   	}

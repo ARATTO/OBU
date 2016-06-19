@@ -24,6 +24,10 @@ private:
 	cocos2d::Sprite *obuPausa;
 	cocos2d::Sprite *SPausa;
 	cocos2d::Sprite *siguiente;
+	cocos2d::Sprite *play;
+	cocos2d::Sprite *atras;
+	cocos2d::Sprite *home;
+	cocos2d::Sprite *reinicio;
 	cocos2d::Sprite *Spausa;
 	cocos2d::Sprite *HPV;
 	cocos2d::Sprite *nivel;
