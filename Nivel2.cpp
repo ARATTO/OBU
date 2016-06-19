@@ -4,6 +4,7 @@
 
 #include "Nivel3.h"
 #include "sqlite3.h"
+#include "IntroGeneral.h"
 USING_NS_CC;
 
 Scene* Nivel2::createScene(){
@@ -42,6 +43,10 @@ bool Nivel2::init()
         CCLOG("open database failed,  number%d",result);
     }
     
+    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic("audio/mainMarcos.mp3", true);
+	
+	
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -677,7 +682,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 						label->setString(punt);
 						
 						if(puntajeL==6){
-							obu->setPosition(200, AL/2-30);
+							obu->setPosition(250, AL/2-30);
 							
 							
 							/*INSERTA EN LA TABLA*/
@@ -867,7 +872,10 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   			
 	   		}else if(obuS.intersectsRect(HO)){
 	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
-	   			
+	   			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+
+				auto scene = IntroGeneral::createScene();
+				Director::getInstance()->replaceScene(scene);
 			   }
 	    
 	    	
@@ -915,7 +923,10 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   			 	home->setVisible(false); 
 	   		}else if(OB.intersectsRect(H)){
 	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
-	   			
+	   			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+
+				auto scene = IntroGeneral::createScene();
+				Director::getInstance()->replaceScene(scene);
 			   }
 	   	
 	   		
