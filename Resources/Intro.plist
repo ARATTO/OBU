@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>OBU_LOGO_COMPLETO.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{3267,1121}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{13,6},{3267,1121}}</string>
+				<key>sourceSize</key>
+				<string>{3300,1140}</string>
+			</dict>
+
+			<key>behelit.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1723},{623,67}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{28,38},{623,67}}</string>
+				<key>sourceSize</key>
+				<string>{690,150}</string>
+			</dict>
+
+			<key>behelit_logo.jpg</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,1122},{960,600}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{960,600}}</string>
+				<key>sourceSize</key>
+				<string>{960,600}</string>
+			</dict>
+
+			<key>cocos_logo.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{624,1723},{195,270}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{195,270}}</string>
+				<key>sourceSize</key>
+				<string>{195,270}</string>
+			</dict>
+
+		</dict>
+
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>size</key>
+			<string>{4096,2048}</string>
+			<key>textureFileName</key>
+			<string>Intro.png</string>
+			</dict>
+		</dict>
+</plist>
