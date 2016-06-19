@@ -6,7 +6,8 @@
 class Niveles : public cocos2d::Layer
 {
 private:
-
+	
+	cocos2d::Sprite *ayuda;
 	cocos2d::Sprite *obu;
 	cocos2d::Sprite *btn_lvl_1;
 	cocos2d::Sprite *btn_lvl_2;
@@ -15,6 +16,10 @@ private:
 
 	float AN;
 	float AL;
+	
+	int siguiente = 0;
+	
+	cocos2d::Label *titulo;
 
 
 public:

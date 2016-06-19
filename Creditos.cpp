@@ -281,7 +281,7 @@ bool Creditos::init()
 void Creditos::intentRegresar(Ref * pSender)
 {
 
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
 
 	auto scene = IntroGeneral::createScene();
 	Director::getInstance()->replaceScene(scene);

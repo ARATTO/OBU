@@ -575,7 +575,8 @@ void Nivel3::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 					
 					cambioAgua->setVisible(true);
 					Nivel3::crearObu();
-						
+					
+					agua=0;	
 					vida--;
 					
 					if(vida==2){
@@ -608,7 +609,7 @@ void Nivel3::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		    	float r = sp->getScaleX();
 		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0)  && agua==0){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0)  && agua==0 && sp->isVisible() ){
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
@@ -735,7 +736,7 @@ void Nivel3::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 			if(bbObu.intersectsRect(Rcerrar)){
 				//pausa = 1;
 				//obu->setPosition(X-20, Y);
-				Nivel3::cerrarPantalla();
+				//Nivel3::cerrarPantalla();
 			}else if(bbObu.intersectsRect(Rpausa)){
 				pausa = 1;
 				obu->setPosition(X, 175);
@@ -862,14 +863,14 @@ void Nivel3::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		
 	   		if(obuS.intersectsRect(Si)){
 	   			/*codigo para que se vaya a los creditos*/
-	   				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+	   				//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 					auto scene = Creditos::createScene();
 					Director::getInstance()->replaceScene(scene);
 	   			
 	   		}else if(obuS.intersectsRect(HO)){
 	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
-	   			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+	   			//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
 
 				auto scene = IntroGeneral::createScene();
 				Director::getInstance()->replaceScene(scene);
@@ -919,7 +920,7 @@ void Nivel3::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   			 home->setVisible(false); 
 	   		}else if(OB.intersectsRect(H)){
 	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
-	   			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+	   			//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
 
 				auto scene = IntroGeneral::createScene();
 				Director::getInstance()->replaceScene(scene);

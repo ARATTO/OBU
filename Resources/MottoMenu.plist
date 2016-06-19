@@ -7,7 +7,7 @@
 			<key>BTN_CREDITOS.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,3595},{690,150}}</string>
+				<string>{{691,3519},{690,150}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -21,7 +21,7 @@
 			<key>BTN_JUGAR.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,3293},{690,150}}</string>
+				<string>{{0,3519},{690,150}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -35,7 +35,7 @@
 			<key>BTN_NIVELES.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,2840},{690,150}}</string>
+				<string>{{691,3368},{690,150}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -49,7 +49,7 @@
 			<key>BTN_NUEVO.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,3142},{690,150}}</string>
+				<string>{{0,3670},{690,150}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -63,7 +63,7 @@
 			<key>BTN_PUNTAJE.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,2991},{690,150}}</string>
+				<string>{{0,3368},{690,150}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -77,7 +77,7 @@
 			<key>CloseNormal.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,3746},{40,40}}</string>
+				<string>{{0,3972},{40,40}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -91,7 +91,7 @@
 			<key>CloseSelected.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,3787},{37,37}}</string>
+				<string>{{0,4013},{37,37}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -119,7 +119,7 @@
 			<key>btn_continuar.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,3444},{690,150}}</string>
+				<string>{{0,3821},{690,150}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -144,10 +144,24 @@
 				<string>{3300,1800}</string>
 			</dict>
 
+			<key>infografia_obu.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,2840},{960,527}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false/>
+				<key>sourceColorRect</key>
+				<string>{{0,0},{960,527}}</string>
+				<key>sourceSize</key>
+				<string>{960,527}</string>
+			</dict>
+
 			<key>obu.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{691,2840},{445,445}}</string>
+				<string>{{961,2840},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>

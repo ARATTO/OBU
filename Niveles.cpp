@@ -61,13 +61,16 @@ bool Niveles::init()
 
 	//TITULO
 
-	auto titulo = Label::createWithSystemFont("NIVELES", "fonts/Marker Felt.ttf", 35);
+	titulo = Label::createWithSystemFont("NIVELES", "fonts/Marker Felt.ttf", 35);
 	titulo->enableShadow();
 	titulo->enableOutline(Color4B::BLACK, 2);
 	titulo->setPosition(Vec2(AN /2, AL - AL * 0.2));
 
 	// add the label as a child to this layer
 	this->addChild(titulo, 1);
+
+
+
 
 	/////////////////////////////
 	//CREAR OBU
@@ -121,6 +124,18 @@ bool Niveles::init()
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 	///////////////////////////////////
+	
+	
+	////////////////////////////////
+	//CREA LA IMAGEN DE AYUDA
+	ayuda = Sprite::createWithSpriteFrameName("infografia_obu.png");
+    ayuda->setPosition(Vec2(240, 160));
+    ayuda->setScaleY(AL*0.90/ayuda->getContentSize().height);
+    ayuda->setScaleX(AN*1.0/ayuda->getContentSize().width);
+    ayuda->setVisible(false);
+	addChild(ayuda);
+	
+
 
 	Device::setAccelerometerEnabled(true);
 	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Niveles::onAcceleration, this));
@@ -132,7 +147,7 @@ bool Niveles::init()
 
 void Niveles::intentRegresar(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
 
 	auto scene = IntroGeneral::createScene();
 	Director::getInstance()->replaceScene(scene);
@@ -140,14 +155,41 @@ void Niveles::intentRegresar(Ref * pSender)
 
 void Niveles::intentLvl_1(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+		auto callbackJump = CallFunc::create([]() {
+		//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
-	auto scene = Nivel1::createScene();
-	Director::getInstance()->replaceScene(scene);
+		auto scene = Nivel1::createScene();
+		Director::getInstance()->replaceScene(scene);
+		});
+		
+		
+		siguiente=1;
+		
+		btn_lvl_1->setVisible(false);
+		btn_lvl_2->setVisible(false);
+		btn_lvl_3->setVisible(false);
+		btn_regresar->setVisible(false);
+		obu->setVisible(false);
+		titulo->setString("");
+		
+		
+		auto delayMedio3 = DelayTime::create(10);
+		auto fadeIn4 = FadeIn::create(0.1f);
+		auto delay4 = DelayTime::create(3);
+		auto fadeOut4 = FadeOut::create(0.1f);
+		
+		ayuda->setVisible(true);
+
+		ayuda->runAction(
+		Sequence::create(delayMedio3, fadeIn4, delay4, fadeOut4, callbackJump, nullptr)
+		);
+
 }
+
+
 void Niveles::intentLvl_2(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 	
 	auto scene = Nivel2::createScene();
@@ -155,7 +197,7 @@ void Niveles::intentLvl_2(Ref * pSender)
 }
 void Niveles::intentLvl_3(Ref * pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 	
 	auto scene = Nivel3::createScene();
@@ -180,7 +222,7 @@ void Niveles::onAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * event
 	X = X + (posX* w *0.03);
 	Y = Y + (posY* h *0.03);
 
-		if(   (X<AN-25 && Y<AL-40)  && (X>5 && Y>15)  )  {
+		if(   (X<AN-25 && Y<AL-40)  && (X>5 && Y>15) && siguiente==0  )  {
 	obu->setPosition(X, Y);
 		}
 		

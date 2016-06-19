@@ -3,7 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "IntroGeneral.h"
 #include "ui\CocosGUI.h"
-
+#include "sqlite3.h"
 
 USING_NS_CC;
 
@@ -29,6 +29,23 @@ bool HelloWorld::init()
 	{
 		return false;
 	}
+	
+	
+	pdb=NULL;//1
+    std::string path= FileUtils::getInstance()->getWritablePath()+"obu.s3db";//2
+
+    
+    
+    result=sqlite3_open(path.c_str(),&pdb);//3
+    if(result!=SQLITE_OK)
+    {
+        CCLOG("open database failed,  number%d",result);
+    }
+
+    sql="create table game(ID text primary key,puntaje text,nivel integer)";//1
+    result=sqlite3_exec(pdb,sql.c_str(),NULL,NULL,NULL);//1
+    if(result!=SQLITE_OK)
+        CCLOG("create table failed");
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();

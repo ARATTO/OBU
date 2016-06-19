@@ -43,11 +43,6 @@ bool Nivel1::init()
         CCLOG("open database failed,  number%d",result);
     }
 
-    sql="create table game(ID text primary key,puntaje text,nivel integer)";//1
-    result=sqlite3_exec(pdb,sql.c_str(),NULL,NULL,NULL);//1
-    if(result!=SQLITE_OK)
-        CCLOG("create table failed");
-
 
 	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
 	audio->playBackgroundMusic("audio/mainMarcos.mp3", true);
@@ -511,7 +506,7 @@ void Nivel1::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 			/*se comprueba un choque por medio de area de cajas es una deteccion automatica y sensilla*/
 			if(bbObu.intersectsRect(Rcerrar)){
 				/*de chocar este invoca el metodo de cerrar el juego*/
-				Nivel1::cerrarPantalla();
+				//Nivel1::cerrarPantalla();
 			}else if(bbObu.intersectsRect(Rpausa)){
 				pausa = 1;
 				obu->setPosition(X, 175);
@@ -641,7 +636,7 @@ void Nivel1::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   			
 	   		}else if(obuS.intersectsRect(HO)){
 	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
-	   			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+	   			//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
 
 				auto scene = IntroGeneral::createScene();
 				Director::getInstance()->replaceScene(scene);
@@ -686,7 +681,7 @@ void Nivel1::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   			
 	   		}else if(OB.intersectsRect(H)){
 	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
-	   				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+	   				//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
 
 				auto scene = IntroGeneral::createScene();
 				Director::getInstance()->replaceScene(scene);

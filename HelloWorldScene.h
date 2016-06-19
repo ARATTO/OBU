@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 
+#include "sqlite3.h"
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -14,7 +15,11 @@ private:
 	float AN;
 	float AL;
 
-
+	sqlite3 *pdb=NULL;
+	int result;
+	std::string sql;
+	
+	
 public:
     static cocos2d::Scene* createScene();
 

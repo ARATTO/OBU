@@ -7,6 +7,7 @@
 #include "Creditos.h"
 #include "ui\CocosGUI.h"
 #include "Nivel1.h"
+#include "Puntaje.h"
 //#include "ui\UIButton.h"
 
 
@@ -72,7 +73,7 @@ bool IntroGeneral::init()
 	/////////////////////////////
 	//CREATE LOGO
 	//ANIMACION OBU
-	auto OBULogo = Sprite::createWithSpriteFrameName("OBU_LOGO.png");
+	OBULogo = Sprite::createWithSpriteFrameName("OBU_LOGO.png");
 	OBULogo->setPosition(Vec2(AN / 5, AL - AL*0.3));
 	OBULogo->setScaleY(AL*0.1 / OBULogo->getContentSize().height);
 	OBULogo->setScaleX(AN*0.1 / OBULogo->getContentSize().width);
@@ -150,6 +151,16 @@ bool IntroGeneral::init()
 	auto menu = Menu::create(closeItem, NULL);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
+	
+	
+	ayuda = Sprite::createWithSpriteFrameName("infografia_obu.png");
+    ayuda->setPosition(Vec2(240, 160));
+    ayuda->setScaleY(AL*0.90/ayuda->getContentSize().height);
+    ayuda->setScaleX(AN*1.0/ayuda->getContentSize().width);
+    ayuda->setVisible(false);
+	addChild(ayuda);
+	
+	/*
 	///////////////////////////////////////////////////////////////////////////////////
 	//MENU PAPU
 	Vector <MenuItem*> MenuItems;
@@ -171,7 +182,7 @@ bool IntroGeneral::init()
 	this->addChild(miMenu, 1);
 	/////////////////////////////
 	
-	
+	*/
 	Device::setAccelerometerEnabled(true);
 	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(IntroGeneral::onAcceleration, this));
 
@@ -194,15 +205,42 @@ void IntroGeneral::menuCloseCallback(Ref* pSender)
 
 void IntroGeneral::intentObuWorld(Ref* pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+	auto callbackJump = CallFunc::create([]() {
+		//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
-	auto scene = Nivel1::createScene();
-	Director::getInstance()->replaceScene(scene);
+		auto scene = Nivel1::createScene();
+		Director::getInstance()->replaceScene(scene);
+		});
+		
+		
+		siguiente=1;
+		
+		btn_jugar->setVisible(false);
+		btn_niveles->setVisible(false);
+		btn_puntaje->setVisible(false);
+		btn_creditos->setVisible(false);
+		btn_cerrar->setVisible(false);
+		obu->setVisible(false);
+		OBULogo->setVisible(false);
+		
+		//titulo->setString("");
+		
+		
+		auto delayMedio3 = DelayTime::create(10);
+		auto fadeIn4 = FadeIn::create(0.1f);
+		auto delay4 = DelayTime::create(3);
+		auto fadeOut4 = FadeOut::create(0.1f);
+		
+		ayuda->setVisible(true);
+
+		ayuda->runAction(
+		Sequence::create(delayMedio3, fadeIn4, delay4, fadeOut4, callbackJump, nullptr)
+		);
 
 }
 void IntroGeneral::intentNiveles(Ref* pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 	auto scene = Niveles::createScene();
 	Director::getInstance()->pushScene(scene);
@@ -210,9 +248,18 @@ void IntroGeneral::intentNiveles(Ref* pSender)
 }
 void IntroGeneral::intentCreditos(Ref* pSender)
 {
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 	auto scene = Creditos::createScene();
+	Director::getInstance()->replaceScene(scene);
+
+}
+
+void IntroGeneral::intentPuntaje(Ref* pSender)
+{
+	//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+
+	auto scene = Puntaje::createScene();
 	Director::getInstance()->replaceScene(scene);
 
 }
@@ -235,7 +282,7 @@ void IntroGeneral::onAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * 
 	X = X + (posX* w *0.03);
 	Y = Y + (posY* h *0.03);
 	
-	if(   (X<AN-25 && Y<AL-40)  && (X>5 && Y>15)  )  {
+	if(   (X<AN-25 && Y<AL-40)  && (X>5 && Y>15) && siguiente==0 )  {
 	obu->setPosition(X, Y);
 		}
 		
@@ -259,6 +306,7 @@ void IntroGeneral::onAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * 
 		IntroGeneral::intentNiveles(this);
 	}
 	else if (bbObu.intersectsRect(Rpuntaje)) {
+		IntroGeneral::intentPuntaje(this);
 		
 	}
 	else if (bbObu.intersectsRect(Rcreditos)) {
