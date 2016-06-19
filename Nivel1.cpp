@@ -1,4 +1,4 @@
-#include "HelloWorldScene.h"
+#include "Nivel1.h"
 #include "SimpleAudioEngine.h"
 #include <unistd.h>
 
@@ -6,12 +6,12 @@
 #include "sqlite3.h"
 USING_NS_CC;
 
-Scene* HelloWorld::createScene(){
+Scene* Nivel1::createScene(){
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     
     // 'layer' is an autorelease object
-    auto layer = HelloWorld::create();
+    auto layer = Nivel1::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -21,7 +21,7 @@ Scene* HelloWorld::createScene(){
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool Nivel1::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -64,7 +64,7 @@ bool HelloWorld::init()
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+                                           CC_CALLBACK_1(Nivel1::menuCloseCallback, this));
     
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
                                 origin.y + closeItem->getContentSize().height/2));
@@ -295,7 +295,7 @@ bool HelloWorld::init()
 
 	/*FUNCION DE LLAMADO Y GENERADOR DE EVENTO DEL ACELEROMETRO*/
 	Device::setAccelerometerEnabled(true);
-	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(HelloWorld::onAcceleration, this));
+	auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Nivel1::onAcceleration, this));
 	
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 	
@@ -312,7 +312,7 @@ bool HelloWorld::init()
 
 
 /*comienza metodo de acelerometro*/
-void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
+void Nivel1::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 {
     
     /*posX y posY obtienen la variable acelerometro al imprimir esta devuelve un valor entre 0 y 1*/
@@ -509,7 +509,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 			/*se comprueba un choque por medio de area de cajas es una deteccion automatica y sensilla*/
 			if(bbObu.intersectsRect(Rcerrar)){
 				/*de chocar este invoca el metodo de cerrar el juego*/
-				HelloWorld::cerrarPantalla();
+				Nivel1::cerrarPantalla();
 			}else if(bbObu.intersectsRect(Rpausa)){
 				pausa = 1;
 				obu->setPosition(X, 175);
@@ -565,7 +565,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   		
 	   		if(obuP.intersectsRect(SPe)){
 	   			
-	   			HelloWorld::reiniciar();
+	   			Nivel1::reiniciar();
 	   			
 	   		}
 	   		
@@ -612,7 +612,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 	   	
 	   		
 	   		gano = Sprite::createWithSpriteFrameName("felicidades.png");
-			gano->setPosition(Vec2(AN/2 +50, AL/2 +50));
+			gano->setPosition(Vec2(AN/2 +50, AL/2 +80));
 	    	gano->setScale(AL*0.3/gano->getContentSize().height);
 	    	
 	    	addChild(gano);	
@@ -635,7 +635,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 				/*for(float q=0;q<1000000000;q++){
 					
 				}*/
-	   			HelloWorld::siguienteNivel();
+	   			Nivel1::siguienteNivel();
 	   			
 	   		}else if(obuS.intersectsRect(HO)){
 	   			/*CODIGO PÁRA QUE SE VAYA AL MENU PRINCIPAL*/
@@ -691,7 +691,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 }
 
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
+void Nivel1::menuCloseCallback(Ref* pSender)
 {
     Director::getInstance()->end();
 
@@ -702,7 +702,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 
 
-void HelloWorld::cerrarPantalla(){
+void Nivel1::cerrarPantalla(){
     Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -711,13 +711,13 @@ void HelloWorld::cerrarPantalla(){
 }
 
 
-void HelloWorld::reiniciar(){
-	auto scene = HelloWorld::createScene();
+void Nivel1::reiniciar(){
+	auto scene = Nivel1::createScene();
 	Director::getInstance()->pushScene(scene);
 }
 
 
-void HelloWorld::siguienteNivel(){
+void Nivel1::siguienteNivel(){
 	auto scene = Nivel2::createScene();
 	Director::getInstance()->pushScene(scene);
 	}
@@ -749,15 +749,15 @@ void HelloWorld::siguienteNivel(){
 		
 		/*
 		if(puntaje==20){
-			HelloWorld::crearViento();
+			Nivel1::crearViento();
 		}else if(puntaje==30){
-			HelloWorld::crearFuego();
+			Nivel1::crearFuego();
 		}else if(puntaje==40){
-			HelloWorld::crearAgua();
+			Nivel1::crearAgua();
 		}else if(puntaje==50){
-			HelloWorld::crearLuz();
+			Nivel1::crearLuz();
 		}else if(puntaje==60){
-			HelloWorld::crearTierra();
+			Nivel1::crearTierra();
 		}else if(puntaje==70){
-			HelloWorld::crearPlanta();
+			Nivel1::crearPlanta();
 		}*/

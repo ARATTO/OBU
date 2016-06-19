@@ -840,7 +840,7 @@ void Nivel3::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 	   		fire.erase(fire.begin(),fire.end());
 	   		
 	   		gano = Sprite::createWithSpriteFrameName("felicidades.png");
-			gano->setPosition(Vec2(AN/2 +50, AL/2 +50));
+			gano->setPosition(Vec2(AN/2 +50, AL/2 +80));
 	    	gano->setScale(AL*0.3/gano->getContentSize().height);
 	    	
 	    	addChild(gano);	

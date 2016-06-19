@@ -1,11 +1,11 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __NIVEL1_SCENE_H__
+#define __NIVEL1_SCENE_H__
 
 #include "cocos2d.h"
 
 #include "sqlite3.h"
 
-class HelloWorld : public cocos2d::Layer
+class Nivel1 : public cocos2d::Layer
 {
 private:
 
@@ -73,11 +73,11 @@ public:
     void siguienteNivel();
     
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(Nivel1);
     
     //METODO DE ACELEROMETRO
     void  onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event);
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __Nivel1_SCENE_H__
 
