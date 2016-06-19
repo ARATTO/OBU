@@ -21,7 +21,7 @@
 			<key>agua.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1551,2273},{445,445}}</string>
+				<string>{{2245,2714},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -35,7 +35,7 @@
 			<key>aguaCambio.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{902,3161},{450,450}}</string>
+				<string>{{651,2259},{450,450}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -49,13 +49,13 @@
 			<key>atras.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1799,3165},{445,440}}</string>
+				<string>{{1999,1822},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,6},{445,440}}</string>
+				<string>{{2,2},{445,445}}</string>
 				<key>sourceSize</key>
 				<string>{450,450}</string>
 			</dict>
@@ -91,7 +91,7 @@
 			<key>barra.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{2821,1822},{125,1560}}</string>
+				<string>{{2818,1822},{125,1560}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -161,7 +161,7 @@
 			<key>fuego.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1353,3611},{445,445}}</string>
+				<string>{{1799,3611},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -175,7 +175,7 @@
 			<key>fuegoCambio.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{651,2259},{450,450}}</string>
+				<string>{{651,2710},{450,450}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -189,7 +189,7 @@
 			<key>hexagono vida.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{2443,2268},{377,327}}</string>
+				<string>{{2440,2268},{377,327}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -203,7 +203,7 @@
 			<key>home.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{2245,3611},{424,424}}</string>
+				<string>{{2245,3160},{424,424}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -217,7 +217,7 @@
 			<key>luz.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1553,1822},{445,445}}</string>
+				<string>{{1548,2273},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -231,7 +231,7 @@
 			<key>muerte.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{651,2710},{450,450}}</string>
+				<string>{{451,3365},{450,450}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -245,7 +245,7 @@
 			<key>obu.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1799,3606},{445,445}}</string>
+				<string>{{1799,3165},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -259,7 +259,7 @@
 			<key>oscuridad.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1353,3165},{445,445}}</string>
+				<string>{{1353,2719},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -287,7 +287,7 @@
 			<key>planta.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{2245,3165},{445,445}}</string>
+				<string>{{1553,1822},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -301,7 +301,7 @@
 			<key>plantaCambio.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{451,3365},{450,450}}</string>
+				<string>{{0,3365},{450,450}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -315,13 +315,13 @@
 			<key>play.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1997,2268},{445,444}}</string>
+				<string>{{1102,2273},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{1,6},{445,444}}</string>
+				<string>{{2,2},{445,445}}</string>
 				<key>sourceSize</key>
 				<string>{450,450}</string>
 			</dict>
@@ -329,13 +329,13 @@
 			<key>reiniciar.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1102,2273},{448,448}}</string>
+				<string>{{1799,2719},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{0,2},{448,448}}</string>
+				<string>{{2,2},{445,445}}</string>
 				<key>sourceSize</key>
 				<string>{450,450}</string>
 			</dict>
@@ -343,13 +343,13 @@
 			<key>siguiente.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1353,2722},{446,442}}</string>
+				<string>{{1353,3165},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
 				<false/>
 				<key>sourceColorRect</key>
-				<string>{{2,6},{446,442}}</string>
+				<string>{{2,2},{445,445}}</string>
 				<key>sourceSize</key>
 				<string>{450,450}</string>
 			</dict>
@@ -357,7 +357,7 @@
 			<key>tierra.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1800,2719},{445,445}}</string>
+				<string>{{1353,3611},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -371,7 +371,7 @@
 			<key>tierraCambio.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{902,3612},{450,450}}</string>
+				<string>{{902,3161},{450,450}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -413,7 +413,7 @@
 			<key>vida+3.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{2246,2713},{387,412}}</string>
+				<string>{{2245,3585},{387,412}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -441,7 +441,7 @@
 			<key>viento.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{1999,1822},{445,445}}</string>
+				<string>{{1994,2268},{445,445}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>
@@ -455,7 +455,7 @@
 			<key>vientoCambio.png</key>
 			<dict>
 				<key>frame</key>
-				<string>{{0,3365},{450,450}}</string>
+				<string>{{902,3612},{450,450}}</string>
 				<key>offset</key>
 				<string>{0,0}</string>
 				<key>rotated</key>

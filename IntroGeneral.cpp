@@ -226,9 +226,9 @@ void IntroGeneral::intentObuWorld(Ref* pSender)
 		//titulo->setString("");
 		
 		
-		auto delayMedio3 = DelayTime::create(10);
+		auto delayMedio3 = DelayTime::create(1);
 		auto fadeIn4 = FadeIn::create(0.1f);
-		auto delay4 = DelayTime::create(3);
+		auto delay4 = DelayTime::create(5);
 		auto fadeOut4 = FadeOut::create(0.1f);
 		
 		ayuda->setVisible(true);
