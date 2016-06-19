@@ -166,10 +166,9 @@ bool Nivel3::init()
    	
    	addChild(vida3);
 	
-	dark.reserve(2);
+	dark.reserve(5);
 	light.reserve(6);
 	fire.reserve(5);
-	plant.reserve(3);
 	
 	for (int i=2;i < 10; i++){
 		
