@@ -2,6 +2,7 @@
 #include "HelloWorldScene.h"
 #include "IntroGeneral.h"
 #include "Niveles.h"
+#include "Creditos.h"
 
 
 USING_NS_CC;

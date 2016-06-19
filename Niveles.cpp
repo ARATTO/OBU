@@ -2,6 +2,7 @@
 #include "IntroGeneral.h"
 #include "cocos2d.h"
 #include "ObuWorld.h"
+#include "SimpleAudioEngine.h"
 
 
 USING_NS_CC;
@@ -129,21 +130,29 @@ bool Niveles::init()
 
 void Niveles::intentRegresar(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/atras.mp3");
+
 	auto scene = IntroGeneral::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 
 void Niveles::intentLvl_1(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+
 	auto scene = ObuWorld::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 void Niveles::intentLvl_2(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+
 	//Agregar Scena lvl2
 }
 void Niveles::intentLvl_3(Ref * pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
+
 	//Agregar Scena lvl3
 }
 
@@ -176,7 +185,6 @@ void Niveles::onAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * event
 
 
 	if (bbObu.intersectsRect(Rregresar)) {
-
 		Niveles::intentRegresar(this);
 	}
 	else if (bbObu.intersectsRect(Rlvl1)) {

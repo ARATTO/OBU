@@ -183,6 +183,7 @@ bool IntroGeneral::init()
 
 void IntroGeneral::menuCloseCallback(Ref* pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/despresio.mp3");
 	Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -192,6 +193,7 @@ void IntroGeneral::menuCloseCallback(Ref* pSender)
 
 void IntroGeneral::intentObuWorld(Ref* pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 	auto scene = ObuWorld::createScene();
 	Director::getInstance()->replaceScene(scene);
@@ -199,6 +201,7 @@ void IntroGeneral::intentObuWorld(Ref* pSender)
 }
 void IntroGeneral::intentNiveles(Ref* pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 	auto scene = Niveles::createScene();
 	Director::getInstance()->pushScene(scene);
@@ -206,6 +209,7 @@ void IntroGeneral::intentNiveles(Ref* pSender)
 }
 void IntroGeneral::intentCreditos(Ref* pSender)
 {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/next.mp3");
 
 	auto scene = Creditos::createScene();
 	Director::getInstance()->replaceScene(scene);
@@ -243,7 +247,6 @@ void IntroGeneral::onAcceleration(cocos2d::Acceleration * acc, cocos2d::Event * 
 
 
 	if (bbObu.intersectsRect(Rcerrar)) {
-
 		IntroGeneral::menuCloseCallback(this);
 	}
 	else if (bbObu.intersectsRect(Rjugar)) {
