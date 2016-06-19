@@ -71,6 +71,7 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
     
+    //METODO DE ACELEROMETRO
     void  onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event);
 };
 

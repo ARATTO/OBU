@@ -285,21 +285,23 @@ bool HelloWorld::init()
 
 
 
-
+/*comienza metodo de acelerometro*/
 void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 {
     
+    /*posX y posY obtienen la variable acelerometro al imprimir esta devuelve un valor entre 0 y 1*/
     float posX= acc->x;
 	float posY =acc->y;	
 
+
+	/*obtengo el tamaño de la pantalla*/
 	Size screenSize = Director::getInstance()->getWinSize();
 
     float w = screenSize.width;
     float h = screenSize.height;
     
   
-    
-      
+         
    	   
    	   
    	if(puntaje!=3 && vida>0 && pausa==0)   {
@@ -308,18 +310,25 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
    		siguiente->setVisible(false); 
    		obuPausa->setVisible(false); 
    		
+		   /*obtengo la posicion actual de la figura*/	
    		 float X = obu->getPosition().x;
     	 float Y = obu->getPosition().y;
     
-    
+    	
+    	/*caculo el movimiento y velocidad de la figura posicion, actual mas el movimiento generado*/
     	X = X + (posX* w *0.03);
     	Y = Y + (posY* h *0.03);
     	
     	 CCLOG("aca es X: %f", X);
    	     CCLOG("aca es Y: %f", Y);
    		
+   		/*condicion que restringe el movimiento no se puede salir de estos margenes si eso sucede la figura no se mueve*/
    		  if(   (X<AN-25 && Y<AL-40)  && (X>115 && Y>15)  )  {
+   		  	
+   		  	/*posiciono la figura dentro de los valores obtenidos con la formula anterior*/
     			obu->setPosition(X, Y);
+    			
+    		/*finaliza los pasos para mover una figura con el acelerometro todo el codigo restante es sobre la logica del juego*/
     			degradado = degradado -10;
     	
     			if(degradado<=0){
@@ -329,37 +338,50 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
     		}
     		
     		
-    		
+    		/*choque con radio*/
+    		/*obtengo el tamaño en X y Y de la figura*/
     		float ancho = obu->getScaleX(); 
 			float alto = obu->getScaleY();
 		
+			/*genero una caja del tamaño de la figura eso se hace para identificar el area de choque*/
     		Rect bbObu = obu->getBoundingBox();	
 
-	
+			
+			/*funcion que recorre el vector que almacena las figuras de la oscuridad lo hace con un for-each*/
 			for(auto sp : dark){	
 				
+				/*vuelve visibles todos los objetos ya que mas adelante se encuentra una opcion que los oculta*/
 				sp->setVisible(true);
 				
+				/*se obtine el area cuadrada de la oscuridad en el cual se genera un choque*/
 				Rect bbOscuridad = sp->getBoundingBox();
 				
+				/*obtengo la posicion en X y Y de la oscuridad*/
 				float X = sp->getPosition().x;
 		    	float Y = sp->getPosition().y;
 		    	
+		    	/*obtengo el centro de la oscuridad solo su centro*/
 		    	float r = sp->getScaleX();
 		
-				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
+				/*compruebo si la caja de obu genera un contacto con el area de la oscuridad*/
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0) ){
+					
+					/*sonido de explosion*/
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
-		
+					
+					/*obtengo la posicion actual de obu*/
 					float posx = obu->getPosition().x;
 					float posy = obu->getPosition().y;
-				
+					
+					/*vuelvo a obu invisible*/
 					obu->setVisible(false);
+					/*pone la explosion en la posicion anteriormente obtenida de obu de esta manera se crea el efecto de obu explotando*/
 					explosion->setPosition(Vec2(posx, posy));
 					explosion->setVisible(true);
 				
+					/*regresa a obu a la posicion de origen y lo vuelve a la normalidad*/
 					obu->setPosition(Vec2(120, 200));
 					obu->setVisible(true);
 						
@@ -392,7 +414,7 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 		    	float r = sp->getScaleX();
 		    		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0) ){
 				
 				
 					if(sp->isVisible()){
@@ -458,9 +480,9 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 			Rect Rcerrar = cerrar->getBoundingBox();
 			Rect Rpausa = Spausa->getBoundingBox();
 			
+			/*se comprueba un choque por medio de area de cajas es una deteccion automatica y sensilla*/
 			if(bbObu.intersectsRect(Rcerrar)){
-				//pausa = 1;
-				//obu->setPosition(X-20, Y);
+				/*de chocar este invoca el metodo de cerrar el juego*/
 				HelloWorld::cerrarPantalla();
 			}else if(bbObu.intersectsRect(Rpausa)){
 				pausa = 1;
@@ -488,11 +510,11 @@ void HelloWorld::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *even
 				explosion->setOpacity(degradado);
 	   		
 	   		
-	   		
+	   		/*recorre los vectores y elimina los sprite*/
 	   		for(auto sp : dark) {
 	   			this->removeChild(sp,true);
 	   		}
-	   		
+	   		/*elimina el espacio de memoria usado para los sprite*/
 	   		dark.erase(dark.begin(),dark.end());	
 	   		
 	   		for(auto sp: light){
@@ -656,7 +678,7 @@ void HelloWorld::reiniciar(){
 void HelloWorld::siguienteNivel(){
 	auto scene = Nivel2::createScene();
 	Director::getInstance()->pushScene(scene);
-}
+	}
 
     /*
     else{

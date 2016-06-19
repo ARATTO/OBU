@@ -527,7 +527,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		    	float r = sp->getScaleX();
 		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0) ){
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
@@ -577,7 +577,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		    	float r = sp->getScaleX();
 		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5)  && agua==0){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0)  && agua==0){
 				    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("audio/explo.mp3");
 					degradado =250;
 					explosion->setOpacity(degradado);
@@ -605,7 +605,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 						obu->setPosition(200, AL/2-70);
 					}
 					
-				}else if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5)  && agua==1){
+				}else if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0)  && agua==1){
 					
 					if(sp->isVisible()){
 						
@@ -635,7 +635,7 @@ void Nivel2::onAcceleration(cocos2d::Acceleration *acc, cocos2d::Event *event)
 		    	float r = sp->getScaleX();
 		    		
 				
-				if(bbObu.intersectsCircle( Vec2(X, Y) , r+1.5) ){
+				if(bbObu.intersectsCircle( Vec2(X, Y) , r+2.0) ){
 				
 				
 					if(sp->isVisible()){
